@@ -1,65 +1,95 @@
-import Image from "next/image";
+"use client";
+
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { FRONTEND_ROUTES } from "@/constants/constants";
+import { motion } from "framer-motion";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <div className="flex flex-col min-h-[100dvh] bg-background text-foreground bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-blue-900/20 via-background to-background">
+      {/* Header */}
+      <header className="px-4 lg:px-6 h-16 flex items-center border-b border-white/10 backdrop-blur-md sticky top-0 z-50">
+        <Link className="flex items-center justify-center p-2" href={FRONTEND_ROUTES.HOME}>
+          <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-emerald-400">
+            HyperStrike
+          </span>
+        </Link>
+        <nav className="ml-auto flex gap-4 sm:gap-6 items-center">
+          <Link href={FRONTEND_ROUTES.LOGIN}>
+            <Button variant="ghost" className="text-sm font-medium hover:text-emerald-400 hover:bg-emerald-400/10 transition-colors">
+              Log in
+            </Button>
+          </Link>
+          <Link href={FRONTEND_ROUTES.REGISTER}>
+            <Button className="text-sm font-medium bg-emerald-500 hover:bg-emerald-600 text-white shadow-[0_0_15px_rgba(16,185,129,0.5)]">
+              Sign Up
+            </Button>
+          </Link>
+        </nav>
+      </header>
+
+      {/* Hero Section */}
+      <main className="flex-1 flex items-center justify-center">
+        <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 flex items-center justify-center px-4">
+          <div className="container px-4 md:px-6 flex flex-col items-center text-center max-w-3xl border border-white/5 rounded-3xl p-8 bg-white/5 backdrop-blur-sm shadow-2xl relative overflow-hidden">
+            {/* Ambient glow */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-emerald-500/10 blur-[100px] pointer-events-none rounded-full" />
+            
+            <motion.h1 
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.5 }}
+              className="text-4xl font-extrabold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl/none bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60 drop-shadow-sm mb-6 relative z-10"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+              The Ultimate <br className="hidden sm:block"/>
+              Lucky Draw Platform
+            </motion.h1>
+            
+            <motion.p 
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="mx-auto max-w-[700px] text-zinc-400 md:text-xl leading-relaxed mb-8 relative z-10"
             >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+              Buy tickets, join the weekly mega draws, and earn infinite passive income through our powerful referral system.
+            </motion.p>
+            
+            <motion.div 
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto relative z-10"
+            >
+              <Link href={FRONTEND_ROUTES.REGISTER} className="w-full sm:w-auto">
+                <Button size="lg" className="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-semibold rounded-full px-8 shadow-[0_0_20px_rgba(16,185,129,0.4)] hover:shadow-[0_0_30px_rgba(16,185,129,0.6)] transition-all">
+                  Start Winning
+                </Button>
+              </Link>
+              <Link href={FRONTEND_ROUTES.LOGIN} className="w-full sm:w-auto">
+                <Button size="lg" variant="outline" className="w-full rounded-full px-8 border-zinc-700 hover:bg-zinc-800 text-zinc-300 transition-all">
+                  Check Tickets
+                </Button>
+              </Link>
+            </motion.div>
+          </div>
+        </section>
       </main>
+
+      {/* Footer */}
+      <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t border-white/10">
+        <p className="text-xs text-zinc-500">
+          © 2026 HyperStrike. All rights reserved.
+        </p>
+        <nav className="sm:ml-auto flex gap-4 sm:gap-6">
+          <Link className="text-xs hover:underline underline-offset-4 text-zinc-500 hover:text-white transition-colors" href="#">
+            Terms of Service
+          </Link>
+          <Link className="text-xs hover:underline underline-offset-4 text-zinc-500 hover:text-white transition-colors" href="#">
+            Privacy
+          </Link>
+        </nav>
+      </footer>
     </div>
   );
 }
