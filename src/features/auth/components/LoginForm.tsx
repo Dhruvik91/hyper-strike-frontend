@@ -1,11 +1,10 @@
 "use client";
 
-import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import * as z from "zod";
 import { motion } from "framer-motion";
-import { Loader2, Mail, Lock, ArrowRight } from "lucide-react";
+import { Loader2, Lock, ArrowRight, Phone } from "lucide-react";
+import Link from "next/link";
 import { FRONTEND_ROUTES } from "@/constants/constants";
 
 import { Button } from "@/components/ui/button";
@@ -20,26 +19,24 @@ import {
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
-const loginSchema = z.object({
-  email: z.string().email({ message: "Please enter a valid email address." }),
-  password: z.string().min(6, { message: "Password must be at least 6 characters." }),
-});
-
-export type LoginValues = z.infer<typeof loginSchema>;
+import { loginSchema, LoginInput } from "@/lib/validations/auth";
 
 interface LoginFormProps {
-  onSubmit: (values: LoginValues) => void;
+  onSubmit: (values: LoginInput) => void;
   isLoading: boolean;
 }
 
 export function LoginForm({ onSubmit, isLoading }: LoginFormProps) {
-  const form = useForm<LoginValues>({
+  const form = useForm<LoginInput>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: "",
+      whatsapp_number: "",
       password: "",
     },
   });
+
+
+
 
   return (
     <Card className="border-white/10 bg-black/40 backdrop-blur-2xl shadow-[0_0_50px_-12px_rgba(16,185,129,0.2)] overflow-hidden">
@@ -56,19 +53,19 @@ export function LoginForm({ onSubmit, isLoading }: LoginFormProps) {
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
             <FormField
               control={form.control}
-              name="email"
+              name="whatsapp_number"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-zinc-300 font-medium ml-1">Email</FormLabel>
+                  <FormLabel className="text-zinc-300 font-medium ml-1">WhatsApp Number</FormLabel>
                   <FormControl>
                     <div className="relative group">
-                      <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-zinc-500 group-focus-within:text-emerald-400 transition-colors" />
-                      <Input 
-                        placeholder="name@example.com" 
-                        type="email"
+                      <Phone className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-zinc-500 group-focus-within:text-emerald-400 transition-colors" />
+                      <Input
+                        placeholder="+123 456 7890"
+                        type="tel"
                         className="bg-zinc-900/50 border-white/10 focus-visible:ring-emerald-500/50 h-14 pl-12 transition-all hover:bg-zinc-900/80 active:scale-[0.99]"
                         disabled={isLoading}
-                        {...field} 
+                        {...field}
                       />
                     </div>
                   </FormControl>
@@ -90,12 +87,12 @@ export function LoginForm({ onSubmit, isLoading }: LoginFormProps) {
                   <FormControl>
                     <div className="relative group">
                       <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-zinc-500 group-focus-within:text-emerald-400 transition-colors" />
-                      <Input 
-                        placeholder="••••••••" 
+                      <Input
+                        placeholder="••••••••"
                         type="password"
                         className="bg-zinc-900/50 border-white/10 focus-visible:ring-emerald-500/50 h-14 pl-12 transition-all hover:bg-zinc-900/80 active:scale-[0.99]"
                         disabled={isLoading}
-                        {...field} 
+                        {...field}
                       />
                     </div>
                   </FormControl>
@@ -107,8 +104,8 @@ export function LoginForm({ onSubmit, isLoading }: LoginFormProps) {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
-              <Button 
-                type="submit" 
+              <Button
+                type="submit"
                 className="w-full h-14 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white font-bold text-lg shadow-[0_4px_20px_rgba(16,185,129,0.3)] border-0 transition-all"
                 disabled={isLoading}
               >

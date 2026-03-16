@@ -6,11 +6,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
 interface ActivityItem {
-  id: number;
+  id: string | number;
   action: string;
   date: string;
   amount: string;
 }
+
 
 interface RecentActivityProps {
   activities: ActivityItem[];
@@ -31,8 +32,8 @@ export function RecentActivity({ activities }: RecentActivityProps) {
       <CardContent>
         <div className="space-y-1">
           {activities.map((activity, i) => (
-            <motion.div 
-              key={activity.id} 
+            <motion.div
+              key={activity.id}
               initial={{ opacity: 0, x: 10 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: i * 0.1 }}

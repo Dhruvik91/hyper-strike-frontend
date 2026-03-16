@@ -20,17 +20,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
-const registerSchema = z.object({
-  email: z.string().email({ message: "Please enter a valid email address." }),
-  whatsapp: z.string().min(10, { message: "Please enter a valid WhatsApp number." }),
-  password: z.string().min(8, { message: "Password must be at least 8 characters." }),
-  referralCode: z.string().optional(),
-});
-
-export type RegisterValues = z.infer<typeof registerSchema>;
+import { registerSchema, RegisterInput } from "@/lib/validations/auth";
 
 interface RegisterFormProps {
-  onSubmit: (values: RegisterValues) => void;
+  onSubmit: (values: RegisterInput) => void;
   isLoading: boolean;
   showOtp: boolean;
   onVerifyOtp: (otp: string) => void;
@@ -38,15 +31,18 @@ interface RegisterFormProps {
 }
 
 export function RegisterForm({ onSubmit, isLoading, showOtp, onVerifyOtp, onGoBack }: RegisterFormProps) {
-  const form = useForm<RegisterValues>({
+  const form = useForm<RegisterInput>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
       email: "",
-      whatsapp: "",
+      whatsapp_number: "",
       password: "",
-      referralCode: "",
+      referral_code: "",
+      first_name: "",
+      last_name: "",
     },
   });
+
 
   return (
     <Card className="border-white/10 bg-black/40 backdrop-blur-2xl shadow-[0_0_50px_-12px_rgba(59,130,246,0.2)] overflow-hidden">
@@ -79,12 +75,12 @@ export function RegisterForm({ onSubmit, isLoading, showOtp, onVerifyOtp, onGoBa
                         <FormControl>
                           <div className="relative group">
                             <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-zinc-500 group-focus-within:text-blue-400 transition-colors" />
-                            <Input 
-                              placeholder="name@example.com" 
+                            <Input
+                              placeholder="name@example.com"
                               type="email"
                               className="bg-zinc-900/50 border-white/10 focus-visible:ring-blue-500/50 h-13 pl-12 transition-all hover:bg-zinc-900/80"
                               disabled={isLoading}
-                              {...field} 
+                              {...field}
                             />
                           </div>
                         </FormControl>
@@ -94,19 +90,19 @@ export function RegisterForm({ onSubmit, isLoading, showOtp, onVerifyOtp, onGoBa
                   />
                   <FormField
                     control={form.control}
-                    name="whatsapp"
+                    name="whatsapp_number"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel className="text-zinc-300 font-medium ml-1">WhatsApp Number</FormLabel>
                         <FormControl>
                           <div className="relative group">
                             <Phone className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-zinc-500 group-focus-within:text-blue-400 transition-colors" />
-                            <Input 
-                              placeholder="+123 456 7890" 
+                            <Input
+                              placeholder="+123 456 7890"
                               type="tel"
                               className="bg-zinc-900/50 border-white/10 focus-visible:ring-blue-500/50 h-13 pl-12 transition-all hover:bg-zinc-900/80"
                               disabled={isLoading}
-                              {...field} 
+                              {...field}
                             />
                           </div>
                         </FormControl>
@@ -123,12 +119,12 @@ export function RegisterForm({ onSubmit, isLoading, showOtp, onVerifyOtp, onGoBa
                         <FormControl>
                           <div className="relative group">
                             <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-zinc-500 group-focus-within:text-blue-400 transition-colors" />
-                            <Input 
-                              placeholder="Min 8 characters" 
+                            <Input
+                              placeholder="Min 8 characters"
                               type="password"
                               className="bg-zinc-900/50 border-white/10 focus-visible:ring-blue-500/50 h-13 pl-12 transition-all hover:bg-zinc-900/80"
                               disabled={isLoading}
-                              {...field} 
+                              {...field}
                             />
                           </div>
                         </FormControl>
@@ -138,19 +134,19 @@ export function RegisterForm({ onSubmit, isLoading, showOtp, onVerifyOtp, onGoBa
                   />
                   <FormField
                     control={form.control}
-                    name="referralCode"
+                    name="referral_code"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel className="text-zinc-300 font-medium ml-1">Referral Code (Optional)</FormLabel>
                         <FormControl>
                           <div className="relative group">
                             <UserPlus className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-zinc-500 group-focus-within:text-blue-400 transition-colors" />
-                            <Input 
-                              placeholder="HSR-XXXXXX" 
+                            <Input
+                              placeholder="HSR-XXXXXX"
                               type="text"
                               className="bg-zinc-900/50 border-white/10 focus-visible:ring-blue-500/50 h-13 pl-12 transition-all hover:bg-zinc-900/80"
                               disabled={isLoading}
-                              {...field} 
+                              {...field}
                             />
                           </div>
                         </FormControl>
@@ -158,10 +154,10 @@ export function RegisterForm({ onSubmit, isLoading, showOtp, onVerifyOtp, onGoBa
                       </FormItem>
                     )}
                   />
-                  
+
                   <motion.div whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }} className="pt-4">
-                    <Button 
-                      type="submit" 
+                    <Button
+                      type="submit"
                       className="w-full h-14 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-lg shadow-[0_4px_20px_rgba(37,99,235,0.3)] border-0 transition-all"
                       disabled={isLoading}
                     >
@@ -202,11 +198,11 @@ export function RegisterForm({ onSubmit, isLoading, showOtp, onVerifyOtp, onGoBa
                 We've sent a 6-digit confirmation code to your WhatsApp. Enter it below to secure your account.
               </CardDescription>
             </div>
-            
+
             <div className="space-y-6 max-w-sm mx-auto">
               <div className="space-y-4">
-                <Input 
-                  placeholder="EX: 123456" 
+                <Input
+                  placeholder="EX: 123456"
                   className="bg-zinc-900/50 border-white/10 focus-visible:ring-emerald-500/50 h-16 text-center text-2xl font-bold tracking-[0.5em] transition-all hover:bg-zinc-900/80"
                   onChange={(e) => {
                     if (e.target.value.length === 6) {
@@ -218,10 +214,10 @@ export function RegisterForm({ onSubmit, isLoading, showOtp, onVerifyOtp, onGoBa
                   Didn't receive the code? <button className="text-emerald-400 hover:underline font-semibold">Resend OTP</button>
                 </p>
               </div>
-              
+
               <div className="flex flex-col gap-3 pt-4">
-                <Button 
-                  variant="ghost" 
+                <Button
+                  variant="ghost"
                   onClick={onGoBack}
                   className="w-full h-12 text-zinc-400 hover:text-white hover:bg-white/5 flex items-center gap-2 justify-center"
                   disabled={isLoading}

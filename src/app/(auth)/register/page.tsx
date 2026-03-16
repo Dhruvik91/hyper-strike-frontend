@@ -6,45 +6,57 @@ import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import { FRONTEND_ROUTES } from "@/constants/constants";
-import { RegisterForm, RegisterValues } from "@/features/auth/components/RegisterForm";
+import { RegisterForm } from "@/features/auth/components/RegisterForm";
+
 import { toast } from "sonner";
+
+import { useSendOtpMutation, useVerifyOtpMutation, useRegisterMutation } from "@/hooks/queries/use-auth";
+import { RegisterInput } from "@/lib/validations/auth";
 
 export default function RegisterPage() {
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
   const [showOtp, setShowOtp] = useState(false);
+  const [registrationData, setRegistrationData] = useState<RegisterInput | null>(null);
 
-  async function handleRegisterIntent(values: RegisterValues) {
-    setIsLoading(true);
-    // TODO: Wire up to useRegisterMutation - step 1: send OTP
-    console.log("Smart Container - Registration Step 1:", values);
-    
-    // Simulate API delay
-    setTimeout(() => {
-      setIsLoading(false);
-      setShowOtp(true);
-      toast.success("Security code sent to your WhatsApp!");
-    }, 1200);
+  const sendOtpMutation = useSendOtpMutation();
+  const verifyOtpMutation = useVerifyOtpMutation();
+  const registerMutation = useRegisterMutation();
+
+  const isLoading = sendOtpMutation.isPending || verifyOtpMutation.isPending || registerMutation.isPending;
+
+  async function handleRegisterIntent(values: RegisterInput) {
+    setRegistrationData(values);
+    sendOtpMutation.mutate({ whatsapp_number: values.whatsapp_number }, {
+      onSuccess: () => {
+        setShowOtp(true);
+      }
+    });
   }
 
   async function handleVerifyOtp(otp: string) {
-    setIsLoading(true);
-    // TODO: Wire up to useRegisterMutation - step 2: verify and create
-    console.log("Smart Container - Verifying OTP:", otp);
+    if (!registrationData) return;
 
-    setTimeout(() => {
-      setIsLoading(false);
-      toast.success("Account created successfully!");
-      router.push(FRONTEND_ROUTES.DASHBOARD);
-    }, 1500);
+    verifyOtpMutation.mutate({
+      whatsapp_number: registrationData.whatsapp_number,
+      otp
+    }, {
+      onSuccess: () => {
+        registerMutation.mutate(registrationData, {
+          onSuccess: () => {
+            router.push(FRONTEND_ROUTES.USER.DASHBOARD);
+          }
+        });
+      }
+    });
   }
+
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-[radial-gradient(ellipse_at_bottom_left,_var(--tw-gradient-stops))] from-indigo-900/30 via-background to-background relative overflow-hidden">
       {/* Visual Enhancements */}
       <div className="absolute top-[-20%] right-[-10%] w-[60%] h-[60%] bg-indigo-600/10 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-[-20%] left-[-10%] w-[60%] h-[60%] bg-blue-600/10 rounded-full blur-[120px] pointer-events-none" />
-      
+
       {/* Animated Floating Particles */}
       <div className="absolute inset-0 pointer-events-none opacity-20">
         <div className="absolute bottom-1/4 right-1/4 w-2 h-2 bg-indigo-400 rounded-full animate-pulse" />
@@ -66,9 +78,9 @@ export default function RegisterPage() {
               HyperStrike
             </span>
           </Link>
-          
-          <Link 
-            href={FRONTEND_ROUTES.HOME} 
+
+          <Link
+            href={FRONTEND_ROUTES.HOME}
             className="flex items-center text-sm font-semibold text-zinc-500 hover:text-blue-400 transition-all group"
           >
             <ArrowLeft className="mr-2 h-4 w-4 group-hover:-translate-x-1 transition-transform" />
@@ -76,8 +88,8 @@ export default function RegisterPage() {
           </Link>
         </div>
 
-        <RegisterForm 
-          onSubmit={handleRegisterIntent} 
+        <RegisterForm
+          onSubmit={handleRegisterIntent}
           isLoading={isLoading}
           showOtp={showOtp}
           onVerifyOtp={handleVerifyOtp}
@@ -85,7 +97,7 @@ export default function RegisterPage() {
         />
 
         <p className="mt-8 text-center text-xs text-zinc-500 font-medium">
-          Registration is free and takes less than a minute. <br/>
+          Registration is free and takes less than a minute. <br />
           Start building your referral network and win big!
         </p>
       </motion.div>
