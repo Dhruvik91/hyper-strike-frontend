@@ -64,7 +64,7 @@ export function ReviewWithdrawalList({ withdrawals, isLoading, onReview }: Revie
                             <div>
                                 <div className="flex items-center gap-2 mb-1">
                                     <h4 className="text-sm font-black text-white">
-                                        {withdrawal.user?.first_name ? `${withdrawal.user.first_name} ${withdrawal.user.last_name || ''}` : 'Striker #' + withdrawal.user_id.slice(-4)}
+                                        {withdrawal.requester?.first_name ? `${withdrawal.requester.first_name} ${withdrawal.requester.last_name || ''}` : 'Striker #' + withdrawal.requester_id.slice(-4)}
                                     </h4>
                                     <span className="text-[10px] font-black uppercase bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded">Verified</span>
                                 </div>
@@ -74,10 +74,10 @@ export function ReviewWithdrawalList({ withdrawals, isLoading, onReview }: Revie
                                 </p>
                                 <div className="mt-3 p-3 bg-black/40 rounded-xl border border-white/5 max-w-sm">
                                     <p className="text-[10px] text-zinc-400 font-bold uppercase tracking-widest mb-1.5 flex items-center gap-2">
-                                        <Landmark className="w-3 h-3" /> Account Credentials
+                                        <Landmark className="w-3 h-3" /> Wallet Address
                                     </p>
                                     <code className="text-xs text-blue-400 leading-relaxed whitespace-pre-line">
-                                        {withdrawal.account_details}
+                                        {withdrawal.wallet_address}
                                     </code>
                                 </div>
                             </div>
@@ -86,7 +86,7 @@ export function ReviewWithdrawalList({ withdrawals, isLoading, onReview }: Revie
                         <div className="flex flex-row md:flex-col items-center md:items-end justify-between w-full md:w-auto gap-4">
                             <div className="text-right">
                                 <p className="text-[10px] text-zinc-500 font-black uppercase tracking-[0.2em] mb-1">Payout Quantum</p>
-                                <p className="text-3xl font-black text-white italic tracking-tighter">₹{withdrawal.amount_inr}</p>
+                                <p className="text-3xl font-black text-white italic tracking-tighter">{withdrawal.amount_requested} {withdrawal.crypto_currency}</p>
                             </div>
 
                             <div className="flex gap-2">

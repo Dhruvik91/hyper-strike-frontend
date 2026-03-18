@@ -3,14 +3,45 @@ import { ApiResponse } from "@/constants/interface";
 import { API_CONFIG } from "@/constants/constants";
 import { toast } from "sonner";
 
+type TokenPair = {
+  access_token: string;
+  refresh_token: string;
+};
+
+const ACCESS_TOKEN_KEY = "hyperstrike_access_token";
+const REFRESH_TOKEN_KEY = "hyperstrike_refresh_token";
+
+const getAccessToken = (): string | null => {
+  if (typeof window === "undefined") return null;
+  return window.localStorage.getItem(ACCESS_TOKEN_KEY);
+};
+
+const getRefreshToken = (): string | null => {
+  if (typeof window === "undefined") return null;
+  return window.localStorage.getItem(REFRESH_TOKEN_KEY);
+};
+
+const setTokenPair = (pair: TokenPair): void => {
+  if (typeof window === "undefined") return;
+  window.localStorage.setItem(ACCESS_TOKEN_KEY, pair.access_token);
+  window.localStorage.setItem(REFRESH_TOKEN_KEY, pair.refresh_token);
+};
+
+const clearTokens = (): void => {
+  if (typeof window === "undefined") return;
+  window.localStorage.removeItem(ACCESS_TOKEN_KEY);
+  window.localStorage.removeItem(REFRESH_TOKEN_KEY);
+};
+
 class HttpService {
   private static instance: HttpService;
   private axiosInstance: AxiosInstance;
+  private refreshPromise: Promise<TokenPair> | null = null;
 
   private constructor() {
     this.axiosInstance = axios.create({
       baseURL: API_CONFIG.baseUrl,
-      withCredentials: true,
+      withCredentials: false,
       headers: {
         "Content-Type": "application/json",
       },
@@ -19,7 +50,11 @@ class HttpService {
     // Request interceptor
     this.axiosInstance.interceptors.request.use(
       (config: InternalAxiosRequestConfig) => {
-        // With cookie-based JWT auth, the browser will attach cookies automatically.
+        const token = getAccessToken();
+        if (token) {
+          config.headers = config.headers ?? ({} as any);
+          (config.headers as any).Authorization = `Bearer ${token}`;
+        }
         return config;
       },
       (error: AxiosError) => {
@@ -55,8 +90,39 @@ class HttpService {
       async (error: AxiosError) => {
         const status = error.response?.status;
 
+        const originalRequest = error.config as (AxiosRequestConfig & { _retry?: boolean }) | undefined;
+        const isRefreshCall = originalRequest?.url === API_CONFIG.ENDPOINTS.AUTH.REFRESH;
+
+        if (status === 401 && originalRequest && !originalRequest._retry && !isRefreshCall) {
+          originalRequest._retry = true;
+          const refreshToken = getRefreshToken();
+
+          if (!refreshToken) {
+            clearTokens();
+            if (typeof window !== 'undefined') {
+              window.location.href = '/login';
+            }
+            return Promise.reject(error);
+          }
+
+          try {
+            const newPair = await this.refreshTokens(refreshToken);
+            setTokenPair(newPair);
+
+            originalRequest.headers = originalRequest.headers ?? {};
+            (originalRequest.headers as any).Authorization = `Bearer ${newPair.access_token}`;
+            return this.axiosInstance.request(originalRequest);
+          } catch (_refreshError) {
+            clearTokens();
+            if (typeof window !== 'undefined') {
+              window.location.href = '/login';
+            }
+            return Promise.reject(error);
+          }
+        }
+
         if (status === 401) {
-          // Perform logout or redirect to login
+          clearTokens();
           if (typeof window !== 'undefined') {
             window.location.href = '/login';
           }
@@ -72,6 +138,40 @@ class HttpService {
         return Promise.reject(error);
       }
     );
+  }
+
+  private async refreshTokens(refreshToken: string): Promise<TokenPair> {
+    if (!this.refreshPromise) {
+      this.refreshPromise = (async () => {
+        const response = await axios.post<ApiResponse<TokenPair>>(
+          `${API_CONFIG.baseUrl}${API_CONFIG.ENDPOINTS.AUTH.REFRESH}`,
+          { refresh_token: refreshToken },
+          { headers: { "Content-Type": "application/json" } },
+        );
+
+        const envelope = response.data;
+        if (
+          envelope &&
+          typeof envelope === 'object' &&
+          'success' in envelope &&
+          'statusCode' in envelope
+        ) {
+          if (!envelope.success || !envelope.data) {
+            throw new Error(
+              Array.isArray(envelope.message) ? envelope.message[0] : envelope.message,
+            );
+          }
+          return envelope.data;
+        }
+
+        // Fallback if backend ever stops wrapping (shouldn't happen)
+        return response.data as unknown as TokenPair;
+      })().finally(() => {
+        this.refreshPromise = null;
+      });
+    }
+
+    return this.refreshPromise;
   }
 
   public static getInstance(): HttpService {

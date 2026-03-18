@@ -11,6 +11,7 @@ interface WithdrawalsViewProps {
     withdrawals: Withdrawal[];
     isLoading: boolean;
     totalPendingAmount: number;
+    pendingCurrency?: string;
     onReview: (id: string, status: 'APPROVED' | 'REJECTED', reason?: string) => void;
 }
 
@@ -18,6 +19,7 @@ export function WithdrawalsView({
     withdrawals,
     isLoading,
     totalPendingAmount,
+    pendingCurrency,
     onReview
 }: WithdrawalsViewProps) {
     return (
@@ -62,7 +64,7 @@ export function WithdrawalsView({
                         <div className="flex items-center justify-between">
                             <div>
                                 <p className="text-[10px] font-black text-zinc-500 uppercase tracking-widest mb-1">Aggregated Settlement Value</p>
-                                <h3 className="text-3xl font-black text-emerald-400 italic">₹{totalPendingAmount.toLocaleString()}</h3>
+                                <h3 className="text-3xl font-black text-emerald-400 italic">{totalPendingAmount.toLocaleString()} {pendingCurrency || ''}</h3>
                             </div>
                             <div className="bg-emerald-500/10 text-emerald-400 p-3 rounded-2xl">
                                 <TrendingUp className="w-6 h-6" />

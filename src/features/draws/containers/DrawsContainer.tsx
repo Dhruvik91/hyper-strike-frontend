@@ -9,7 +9,7 @@ export function DrawsContainer() {
 
     return (
         <DrawsView
-            upcomingDraw={upcomingDraw}
+            upcomingDraw={upcomingDraw ?? undefined}
             historyDraws={historyResponse?.items || []}
             isUpcomingLoading={isUpcomingLoading}
             isHistoryLoading={isHistoryLoading}

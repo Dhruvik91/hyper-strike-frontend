@@ -50,7 +50,9 @@ export function WithdrawalHistory({ withdrawals, isLoading }: WithdrawalHistoryP
                                     <Clock className="w-5 h-5" />}
                         </div>
                         <div>
-                            <p className="text-sm font-black text-white group-hover:text-emerald-400 transition-colors">₹{withdrawal.amount_inr}</p>
+                            <p className="text-sm font-black text-white group-hover:text-emerald-400 transition-colors">
+                                {withdrawal.amount_requested} {withdrawal.crypto_currency}
+                            </p>
                             <p className="text-[10px] text-zinc-500 font-bold uppercase tracking-wider">
                                 {format(new Date(withdrawal.created_at), "MMM dd, yyyy")}
                             </p>

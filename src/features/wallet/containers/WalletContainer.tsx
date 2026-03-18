@@ -9,8 +9,8 @@ export function WalletContainer() {
     const { data: withdrawalHistory, isLoading: isHistoryLoading } = useWithdrawalHistoryQuery(1, 10);
     const withdrawalMutation = useRequestWithdrawalMutation();
 
-    const handleWithdrawalRequest = (values: { amount: number }) => {
-        withdrawalMutation.mutate(values.amount);
+    const handleWithdrawalRequest = (values: { amount: number; crypto_currency: string; wallet_address: string }) => {
+        withdrawalMutation.mutate(values);
     };
 
     return (

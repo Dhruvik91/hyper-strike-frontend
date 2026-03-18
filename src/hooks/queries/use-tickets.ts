@@ -2,7 +2,6 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import httpService from "@/lib/http-service";
 import { API_CONFIG } from "@/constants/constants";
 import {
-    ApiResponse,
     Ticket,
     PaginatedResponse
 } from "@/constants/interface";
@@ -12,10 +11,10 @@ export const useTicketPriceQuery = () => {
     return useQuery({
         queryKey: ["ticket-price"],
         queryFn: async () => {
-            const response = await httpService.get<ApiResponse<{ price_inr: number }>>(
+            const response = await httpService.get<{ price_inr: string }>(
                 API_CONFIG.ENDPOINTS.TICKETS.PRICE
             );
-            return response.data.data;
+            return response.data;
         },
     });
 };
@@ -37,13 +36,13 @@ export const usePurchaseTicketMutation = () => {
     const queryClient = useQueryClient();
     return useMutation({
         mutationFn: async (quantity: number) => {
-            const response = await httpService.post<ApiResponse<{ payment_url: string }>>(
+            const response = await httpService.post<{ onramp_order_id: string; payment_url: string }>(
                 API_CONFIG.ENDPOINTS.TICKETS.PURCHASE,
                 { quantity }
             );
             return response.data;
         },
-        onSuccess: (data: any) => {
+        onSuccess: (data) => {
             toast.success("Ticket purchase initiated");
             // Redirect to payment gateway or show success
             if (data?.payment_url) {

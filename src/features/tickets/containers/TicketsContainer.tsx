@@ -19,7 +19,7 @@ export function TicketsContainer() {
             tickets={ticketsResponse?.items || []}
             totalTickets={ticketsResponse?.total || 0}
             isTicketsLoading={isTicketsLoading}
-            ticketPrice={ticketPrice?.price_inr || 500}
+            ticketPrice={Number(ticketPrice?.price_inr) || 500}
             quantity={quantity}
             onQuantityChange={setQuantity}
             onPurchase={handlePurchase}

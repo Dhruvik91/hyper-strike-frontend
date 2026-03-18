@@ -10,9 +10,9 @@ export interface ApiResponse<T = unknown> {
 }
 
 export enum UserRole {
-  USER = 'user',
-  ADMIN = 'admin',
-  SUPER_ADMIN = 'super_admin',
+  SUPER_ADMIN = 1,
+  ADMIN = 2,
+  USER = 3,
 }
 
 export interface UserProfile {
@@ -41,6 +41,8 @@ export interface WalletBalance {
   balance: number;
   commission_earned: number;
   withdrawn: number;
+  crypto_balance?: number;
+  crypto_currency?: string;
 }
 
 export interface Referral {
@@ -93,15 +95,16 @@ export interface DrawWinner {
 
 export interface Withdrawal {
   id: string;
-  user_id: string;
-  amount_inr: string;
+  requester_id: string;
+  amount_requested: string;
+  crypto_currency: string;
+  wallet_address: string;
   status: 'PENDING' | 'APPROVED' | 'REJECTED';
-  account_details: string;
   rejection_reason?: string;
   reviewed_by?: string;
   reviewed_at?: string;
   created_at: string;
-  user?: UserProfile;
+  requester?: UserProfile;
 }
 
 export interface PlatformConfig {
@@ -119,6 +122,6 @@ export interface PaginatedResponse<T> {
   total: number;
   page: number;
   limit: number;
-  totalPages: number;
+  totalPages?: number;
 }
 

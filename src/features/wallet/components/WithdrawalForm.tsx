@@ -19,9 +19,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const withdrawalSchema = z.object({
     amount: z.number()
-        .min(500, "Minimum withdrawal amount is ₹500")
-        .max(50000, "Maximum withdrawal amount is ₹50,000"),
-    account_details: z.string().min(10, "Please provide full bank account details (Bank, A/C No, IFSC)"),
+        .min(0.01, "Minimum withdrawal amount is 0.01")
+        .max(100000, "Maximum withdrawal amount exceeded"),
+    crypto_currency: z.string().min(1, "Crypto currency is required"),
+    wallet_address: z.string().min(10, "Wallet address is required"),
 });
 
 type WithdrawalInput = z.infer<typeof withdrawalSchema>;
@@ -36,8 +37,9 @@ export function WithdrawalForm({ onSubmit, isLoading, maxBalance }: WithdrawalFo
     const form = useForm<WithdrawalInput>({
         resolver: zodResolver(withdrawalSchema),
         defaultValues: {
-            amount: 500,
-            account_details: "",
+            amount: 0.01,
+            crypto_currency: "USDT",
+            wallet_address: "",
         },
     });
 
@@ -59,22 +61,21 @@ export function WithdrawalForm({ onSubmit, isLoading, maxBalance }: WithdrawalFo
                             name="amount"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel className="text-zinc-400 font-bold uppercase tracking-widest text-[10px]">Withdrawal Amount (INR)</FormLabel>
+                                    <FormLabel className="text-zinc-400 font-bold uppercase tracking-widest text-[10px]">Withdrawal Amount</FormLabel>
                                     <FormControl>
                                         <div className="relative">
-                                            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500 font-bold">₹</span>
                                             <Input
                                                 {...field}
                                                 type="number"
-                                                placeholder="500"
-                                                className="bg-black/40 border-white/10 h-14 pl-8 rounded-2xl text-xl font-black text-white focus:ring-emerald-500/20 focus:border-emerald-500/40 transition-all"
+                                                placeholder="0.01"
+                                                className="bg-black/40 border-white/10 h-14 rounded-2xl text-xl font-black text-white focus:ring-emerald-500/20 focus:border-emerald-500/40 transition-all"
                                                 onChange={(e) => field.onChange(e.target.value === "" ? 0 : Number(e.target.value))}
                                             />
                                         </div>
                                     </FormControl>
                                     <FormDescription className="text-[10px] font-medium text-zinc-500 flex justify-between">
-                                        <span>Available: ₹{maxBalance}</span>
-                                        <span>Min: ₹500</span>
+                                        <span>Available: {maxBalance}</span>
+                                        <span>Min: 0.01</span>
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>
@@ -83,14 +84,32 @@ export function WithdrawalForm({ onSubmit, isLoading, maxBalance }: WithdrawalFo
 
                         <FormField
                             control={form.control}
-                            name="account_details"
+                            name="crypto_currency"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel className="text-zinc-400 font-bold uppercase tracking-widest text-[10px]">Settlement Account Details</FormLabel>
+                                    <FormLabel className="text-zinc-400 font-bold uppercase tracking-widest text-[10px]">Crypto Currency</FormLabel>
+                                    <FormControl>
+                                        <Input
+                                            {...field}
+                                            placeholder="USDT"
+                                            className="bg-black/40 border-white/10 h-14 rounded-2xl text-sm font-bold text-white focus:ring-emerald-500/20 focus:border-emerald-500/40 transition-all"
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+
+                        <FormField
+                            control={form.control}
+                            name="wallet_address"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel className="text-zinc-400 font-bold uppercase tracking-widest text-[10px]">Wallet Address</FormLabel>
                                     <FormControl>
                                         <textarea
                                             {...field}
-                                            placeholder="Bank Name:&#10;Account Number:&#10;IFSC Code:&#10;Account Holder:"
+                                            placeholder="0x..."
                                             className="w-full bg-black/40 border border-white/10 rounded-2xl p-4 text-sm font-medium text-white min-h-[120px] focus:outline-none focus:ring-1 focus:ring-emerald-500/20 focus:border-emerald-500/40 transition-all resize-none"
                                         />
                                     </FormControl>

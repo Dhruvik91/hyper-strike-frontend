@@ -4,17 +4,33 @@ import { API_CONFIG } from "@/constants/constants";
 import {
     UserProfile,
     WalletBalance,
-    ApiResponse
 } from "@/constants/interface";
 
 export const useWalletBalanceQuery = () => {
     return useQuery({
         queryKey: ["wallet-balance"],
         queryFn: async () => {
-            const response = await httpService.get<ApiResponse<WalletBalance>>(
+            const response = await httpService.get<{
+                wallet_balance_inr: string;
+                wallet_balance_crypto: string;
+                crypto_currency: string;
+            }>(
                 API_CONFIG.ENDPOINTS.USERS.WALLET
             );
-            return response.data.data;
+
+            const inr = Number(response.data.wallet_balance_inr);
+            const crypto = Number(response.data.wallet_balance_crypto);
+
+            const wallet: WalletBalance = {
+                total_balance: Number.isFinite(inr) ? inr : 0,
+                balance: Number.isFinite(inr) ? inr : 0,
+                commission_earned: 0,
+                withdrawn: 0,
+                crypto_balance: Number.isFinite(crypto) ? crypto : 0,
+                crypto_currency: response.data.crypto_currency,
+            };
+
+            return wallet;
         },
     });
 };

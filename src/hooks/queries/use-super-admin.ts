@@ -1,7 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import httpService from "@/lib/http-service";
 import { API_CONFIG } from "@/constants/constants";
-import { ApiResponse, PaginatedResponse, UserProfile, Withdrawal, PlatformConfig } from "@/constants/interface";
+import { PaginatedResponse, UserProfile, Withdrawal, PlatformConfig } from "@/constants/interface";
 
 import { toast } from "sonner";
 
@@ -21,9 +21,10 @@ export const useSuperAdminUsersQuery = (page = 1, limit = 10) => {
 export const useToggleUserStatusMutation = () => {
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: async (userId: string) => {
-            const response = await httpService.patch<ApiResponse>(
-                API_CONFIG.ENDPOINTS.SUPER_ADMIN.TOGGLE_USER(userId)
+        mutationFn: async (payload: { userId: string; is_active: boolean }) => {
+            const response = await httpService.patch<UserProfile>(
+                API_CONFIG.ENDPOINTS.SUPER_ADMIN.TOGGLE_USER(payload.userId),
+                { is_active: payload.is_active },
             );
             return response.data;
         },
@@ -38,10 +39,10 @@ export const usePendingWithdrawalsQuery = () => {
     return useQuery({
         queryKey: ["pending-withdrawals"],
         queryFn: async () => {
-            const response = await httpService.get<ApiResponse<Withdrawal[]>>(
+            const response = await httpService.get<PaginatedResponse<Withdrawal>>(
                 API_CONFIG.ENDPOINTS.SUPER_ADMIN.PENDING_WITHDRAWALS
             );
-            return response.data.data;
+            return response.data;
         },
     });
 };
@@ -49,15 +50,15 @@ export const usePendingWithdrawalsQuery = () => {
 export const useReviewWithdrawalMutation = () => {
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: async ({ id, status, rejection_reason }: { id: string; status: 'APPROVED' | 'REJECTED'; rejection_reason?: string }) => {
-            const response = await httpService.post<ApiResponse>(
+        mutationFn: async ({ id, action, rejection_reason }: { id: string; action: 'approve' | 'reject'; rejection_reason?: string }) => {
+            const response = await httpService.post<Withdrawal>(
                 API_CONFIG.ENDPOINTS.SUPER_ADMIN.REVIEW_WITHDRAWAL(id),
-                { status, rejection_reason }
+                { action, rejection_reason }
             );
             return response.data;
         },
         onSuccess: (_, variables) => {
-            toast.success(`Withdrawal ${variables.status.toLowerCase()} successfully`);
+            toast.success(`Withdrawal ${variables.action}d successfully`);
             queryClient.invalidateQueries({ queryKey: ["pending-withdrawals"] });
         },
     });
@@ -67,10 +68,10 @@ export const usePlatformConfigQuery = () => {
     return useQuery({
         queryKey: ["platform-config"],
         queryFn: async () => {
-            const response = await httpService.get<ApiResponse<PlatformConfig>>(
+            const response = await httpService.get<PlatformConfig>(
                 API_CONFIG.ENDPOINTS.SUPER_ADMIN.CONFIG
             );
-            return response.data.data;
+            return response.data;
         },
     });
 };
@@ -79,7 +80,7 @@ export const useUpdatePlatformConfigMutation = () => {
     const queryClient = useQueryClient();
     return useMutation({
         mutationFn: async (config: Partial<PlatformConfig>) => {
-            const response = await httpService.patch<ApiResponse>(
+            const response = await httpService.put<PlatformConfig>(
                 API_CONFIG.ENDPOINTS.SUPER_ADMIN.CONFIG,
                 config
             );

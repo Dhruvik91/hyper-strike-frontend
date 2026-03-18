@@ -8,19 +8,22 @@ export function WithdrawalsContainer() {
     const reviewMutation = useReviewWithdrawalMutation();
 
     const handleReview = (id: string, status: 'APPROVED' | 'REJECTED', reason?: string) => {
-        reviewMutation.mutate({ id, status, rejection_reason: reason });
+        reviewMutation.mutate({
+            id,
+            action: status === 'APPROVED' ? 'approve' : 'reject',
+            rejection_reason: reason,
+        });
     };
 
-    const totalPendingAmount = withdrawals?.reduce((acc, curr) => acc + Number(curr.amount_inr), 0) || 0;
+    const totalPendingAmount = withdrawals?.items?.reduce((acc, curr) => acc + Number(curr.amount_requested), 0) || 0;
+    const pendingCurrency = withdrawals?.items?.[0]?.crypto_currency;
 
     return (
         <WithdrawalsView
-            withdrawals={withdrawals?.map(w => ({
-                ...w,
-                user: w.user || { whatsapp_number: 'N/A' } as any
-            })) || []}
+            withdrawals={withdrawals?.items || []}
             isLoading={isLoading}
             totalPendingAmount={totalPendingAmount}
+            pendingCurrency={pendingCurrency}
             onReview={handleReview}
         />
     );

@@ -2,7 +2,6 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import httpService from "@/lib/http-service";
 import { API_CONFIG } from "@/constants/constants";
 import {
-    AuthResponse,
     ApiResponse,
     UserProfile
 } from "@/constants/interface";
@@ -13,6 +12,31 @@ import {
     VerifyOtpInput
 } from "@/lib/validations/auth";
 import { toast } from "sonner";
+
+type TokenPair = {
+    access_token: string;
+    refresh_token: string;
+};
+
+const ACCESS_TOKEN_KEY = "hyperstrike_access_token";
+const REFRESH_TOKEN_KEY = "hyperstrike_refresh_token";
+
+const setTokenPair = (pair: TokenPair) => {
+    if (typeof window === "undefined") return;
+    window.localStorage.setItem(ACCESS_TOKEN_KEY, pair.access_token);
+    window.localStorage.setItem(REFRESH_TOKEN_KEY, pair.refresh_token);
+};
+
+const clearTokens = () => {
+    if (typeof window === "undefined") return;
+    window.localStorage.removeItem(ACCESS_TOKEN_KEY);
+    window.localStorage.removeItem(REFRESH_TOKEN_KEY);
+};
+
+const getRefreshToken = (): string | null => {
+    if (typeof window === "undefined") return null;
+    return window.localStorage.getItem(REFRESH_TOKEN_KEY);
+};
 
 export const useSendOtpMutation = () => {
     return useMutation({
@@ -56,13 +80,14 @@ export const useRegisterMutation = () => {
     const queryClient = useQueryClient();
     return useMutation({
         mutationFn: async (data: RegisterInput) => {
-            const response = await httpService.post<AuthResponse>(
+            const response = await httpService.post<TokenPair>(
                 API_CONFIG.ENDPOINTS.AUTH.REGISTER,
                 data
             );
             return response.data;
         },
-        onSuccess: () => {
+        onSuccess: (data) => {
+            setTokenPair(data);
             toast.success("Registration successful");
             queryClient.invalidateQueries({ queryKey: ["profile"] });
         },
@@ -76,13 +101,14 @@ export const useLoginMutation = () => {
     const queryClient = useQueryClient();
     return useMutation({
         mutationFn: async (data: LoginInput) => {
-            const response = await httpService.post<AuthResponse>(
+            const response = await httpService.post<TokenPair>(
                 API_CONFIG.ENDPOINTS.AUTH.LOGIN,
                 data
             );
             return response.data;
         },
-        onSuccess: () => {
+        onSuccess: (data) => {
+            setTokenPair(data);
             toast.success("Login successful");
             queryClient.invalidateQueries({ queryKey: ["profile"] });
         },
@@ -96,16 +122,16 @@ export const useLogoutMutation = () => {
     const queryClient = useQueryClient();
     return useMutation({
         mutationFn: async () => {
-            // Backend expects RefreshTokenDto for logout, but if we use cookies, 
-            // the backend might handle it. Let's send an empty object for now.
+            const refreshToken = getRefreshToken();
             const response = await httpService.post<ApiResponse>(
                 API_CONFIG.ENDPOINTS.AUTH.LOGOUT,
-                {}
+                { refresh_token: refreshToken }
             );
             return response.data;
         },
         onSuccess: () => {
             toast.success("Logged out successfully");
+            clearTokens();
             queryClient.clear();
             if (typeof window !== "undefined") {
                 window.location.href = "/login";

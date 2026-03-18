@@ -2,7 +2,6 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import httpService from "@/lib/http-service";
 import { API_CONFIG } from "@/constants/constants";
 import {
-    ApiResponse,
     Withdrawal,
     PaginatedResponse
 } from "@/constants/interface";
@@ -12,11 +11,15 @@ export const useWithdrawalHistoryQuery = (page = 1, limit = 10) => {
     return useQuery({
         queryKey: ["withdrawal-history", page, limit],
         queryFn: async () => {
-            const response = await httpService.get<PaginatedResponse<Withdrawal>>(
-                API_CONFIG.ENDPOINTS.WITHDRAWALS.MY_HISTORY,
-                { params: { page, limit } }
+            const response = await httpService.get<Withdrawal[]>(
+                API_CONFIG.ENDPOINTS.WITHDRAWALS.MY_HISTORY
             );
-            return response.data;
+            return {
+                items: response.data,
+                total: response.data.length,
+                page,
+                limit,
+            } satisfies PaginatedResponse<Withdrawal>;
         },
     });
 };
@@ -24,12 +27,12 @@ export const useWithdrawalHistoryQuery = (page = 1, limit = 10) => {
 export const useRequestWithdrawalMutation = () => {
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: async (amount: number) => {
-            const response = await httpService.post<ApiResponse<void>>(
+        mutationFn: async (payload: { amount: number; crypto_currency: string; wallet_address: string }) => {
+            const response = await httpService.post<void>(
                 API_CONFIG.ENDPOINTS.WITHDRAWALS.REQUEST,
-                { amount }
+                payload
             );
-            return response.data.data;
+            return response.data;
         },
         onSuccess: () => {
             toast.success("Withdrawal request submitted");

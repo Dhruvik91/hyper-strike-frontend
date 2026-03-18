@@ -13,7 +13,7 @@ interface WalletViewProps {
     withdrawalHistory: Withdrawal[];
     isHistoryLoading: boolean;
     withdrawalPending: boolean;
-    onWithdrawalRequest: (values: { amount: number }) => void;
+    onWithdrawalRequest: (values: { amount: number; crypto_currency: string; wallet_address: string }) => void;
 }
 
 export function WalletView({
@@ -67,7 +67,7 @@ export function WalletView({
                     <WithdrawalForm
                         onSubmit={onWithdrawalRequest}
                         isLoading={withdrawalPending}
-                        maxBalance={wallet?.balance || 0}
+                        maxBalance={wallet?.crypto_balance || 0}
                     />
                 </div>
             </section>

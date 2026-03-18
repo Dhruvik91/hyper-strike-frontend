@@ -1,5 +1,5 @@
 export const API_CONFIG = {
-  baseUrl: process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000",
+  baseUrl: process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000/api/v1",
   ENDPOINTS: {
     AUTH: {
       SEND_OTP: "/auth/send-otp",
@@ -8,7 +8,7 @@ export const API_CONFIG = {
       LOGIN: "/auth/login",
       REFRESH: "/auth/refresh",
       LOGOUT: "/auth/logout",
-      ME: "/auth/me",
+      ME: "/users/me",
     },
     USERS: {
       PROFILE: "/users/me",

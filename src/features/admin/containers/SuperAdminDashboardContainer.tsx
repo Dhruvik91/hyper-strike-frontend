@@ -40,7 +40,9 @@ export function SuperAdminDashboardContainer() {
     ];
 
     const handleToggleStatus = (id: string) => {
-        toggleMutation.mutate(id);
+        const user = usersResponse?.items?.find((u) => u.id === id);
+        if (!user) return;
+        toggleMutation.mutate({ userId: id, is_active: !user.is_active });
     };
 
     return (
