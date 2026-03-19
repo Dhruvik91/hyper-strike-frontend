@@ -64,22 +64,26 @@ export interface Ticket {
 
 export interface Draw {
   id: string;
-  type: 'WEEKLY' | 'MEGA';
-  status: 'SCHEDULED' | 'ONGOING' | 'COMPLETED' | 'CANCELLED';
+  type: 'WEEKLY' | 'MEGA' | 'DAILY';
+  status: 'UPCOMING' | 'ACTIVE' | 'COMPLETED';
   scheduled_at: string;
   completed_at?: string;
   created_at: string;
+  created_by: string;
+  creator?: UserProfile;
 }
 
 export interface DrawWinner {
   id: string;
   draw_id: string;
   user_id: string;
-  ticket_id: string;
-  rank: number;
-  prize_amount?: string;
+  ticket_id?: string;
+  win_type: 'RANDOM_TICKET' | 'TOP_REFERRER';
+  prize_amount_inr: string;
+  created_at: string;
   user?: UserProfile;
   ticket?: Ticket;
+  draw?: Draw;
 }
 
 export interface Withdrawal {

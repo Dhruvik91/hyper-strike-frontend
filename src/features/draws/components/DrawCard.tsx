@@ -15,7 +15,7 @@ interface DrawCardProps {
 
 export function DrawCard({ draw }: DrawCardProps) {
     const isCompleted = draw.status === "COMPLETED";
-    const isOngoing = draw.status === "ONGOING";
+    const isOngoing = draw.status === "ACTIVE";
 
     return (
         <motion.div

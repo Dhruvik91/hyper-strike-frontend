@@ -84,7 +84,7 @@ export function WinnerVisualization({ winners, drawType, onComplete }: WinnerVis
                                     transition={{ delay: 0.3 }}
                                 >
                                     <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/20 border border-amber-500/30 text-amber-400 text-xs font-black uppercase tracking-widest mb-6">
-                                        <Star className="w-3.5 h-3.5 fill-current" /> Rank #{winners[currentIndex].rank}
+                                        <Star className="w-3.5 h-3.5 fill-current" /> Winner #{currentIndex + 1}
                                     </div>
 
                                     <div className="w-32 h-32 rounded-full bg-gradient-to-tr from-zinc-800 to-zinc-900 border-2 border-emerald-500/30 mx-auto flex items-center justify-center mb-6 relative group">
@@ -108,7 +108,7 @@ export function WinnerVisualization({ winners, drawType, onComplete }: WinnerVis
                                     </div>
 
                                     <div className="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-yellow-600 drop-shadow-xl italic">
-                                        ₹{winners[currentIndex].prize_amount || (drawType === 'MEGA' ? '25,000' : '2,500')}
+                                        ₹{winners[currentIndex].prize_amount_inr || (drawType === 'MEGA' ? '25,000' : '2,500')}
                                     </div>
                                 </motion.div>
                             </motion.div>

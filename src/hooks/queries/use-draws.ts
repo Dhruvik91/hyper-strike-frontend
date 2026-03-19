@@ -44,3 +44,29 @@ export const useDrawWinnersQuery = (drawId: string) => {
         enabled: !!drawId,
     });
 };
+
+export const useAllDrawsQuery = (page = 1, limit = 20) => {
+    return useQuery({
+        queryKey: ["all-draws", page, limit],
+        queryFn: async () => {
+            const response = await httpService.get<PaginatedResponse<Draw>>(
+                API_CONFIG.ENDPOINTS.DRAWS.LIST,
+                { params: { page, limit } }
+            );
+            return response.data;
+        },
+    });
+};
+
+export const useDrawDetailsQuery = (drawId: string) => {
+    return useQuery({
+        queryKey: ["draw-details", drawId],
+        queryFn: async () => {
+            const response = await httpService.get<Draw>(
+                API_CONFIG.ENDPOINTS.DRAWS.BY_ID(drawId)
+            );
+            return response.data;
+        },
+        enabled: !!drawId,
+    });
+};

@@ -71,21 +71,26 @@ export function DrawDetailsView({
                 <section className="max-w-4xl mx-auto space-y-6">
                     <h2 className="text-xl font-black text-white uppercase tracking-widest text-center underline decoration-amber-500 underline-offset-8">Official Standings</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {winners.map((winner) => (
-                            <div key={winner.id} className="bg-zinc-950/40 border border-white/5 p-5 rounded-2xl flex items-center justify-between group hover:bg-white/[0.02] transition-colors">
+                        {winners.map((winner, index) => (
+                            <motion.div
+                                key={winner.id}
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                className="bg-zinc-950/40 border border-white/5 rounded-2xl p-4 flex items-center justify-between group hover:bg-white/[0.02] transition-colors"
+                            >
                                 <div className="flex items-center gap-4">
                                     <div className="w-10 h-10 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 font-black text-xs">
-                                        {winner.rank}
+                                        #{index + 1}
                                     </div>
                                     <div>
                                         <p className="text-sm font-bold text-white">{winner.user?.first_name || 'Striker'}</p>
-                                        <p className="text-[10px] text-zinc-500 font-bold tracking-widest uppercase italic">#{winner.ticket?.ticket_number}</p>
+                                        <p className="text-[10px] text-zinc-500 font-medium uppercase tracking-wider">{winner.win_type.replace('_', ' ')}</p>
                                     </div>
                                 </div>
                                 <div className="text-right">
-                                    <p className="text-sm font-black text-amber-500">₹{winner.prize_amount || '1,000'}</p>
+                                    <p className="text-lg font-black text-emerald-400 italic">₹{winner.prize_amount_inr}</p>
                                 </div>
-                            </div>
+                            </motion.div>
                         ))}
                     </div>
                 </section>
