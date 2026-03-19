@@ -42,6 +42,7 @@ export function AdminDashboardContainer() {
         <AdminDashboardView
             stats={adminStats}
             isLoading={isLoading}
+            commissions={stats?.commissions || []}
         />
     );
 }

@@ -4,15 +4,19 @@ import { motion } from "framer-motion";
 import { ShieldCheck } from "lucide-react";
 import { StatsGrid } from "@/features/dashboard/components/StatsGrid";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { CommissionsList } from "./CommissionsList";
+import { Commission } from "@/constants/interface";
 
 interface AdminDashboardViewProps {
     stats: any[];
     isLoading: boolean;
+    commissions?: Commission[];
 }
 
 export function AdminDashboardView({
     stats,
-    isLoading
+    isLoading,
+    commissions = []
 }: AdminDashboardViewProps) {
     return (
         <div className="space-y-10 pb-16">
@@ -48,9 +52,7 @@ export function AdminDashboardView({
                         <CardTitle className="text-lg font-black text-white uppercase tracking-tight">Recent Commissions</CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <div className="text-zinc-500 text-sm italic py-10 text-center">
-                            Real-time commission feed incoming...
-                        </div>
+                        <CommissionsList commissions={commissions} isLoading={isLoading} />
                     </CardContent>
                 </Card>
 

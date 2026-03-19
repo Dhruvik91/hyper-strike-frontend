@@ -53,17 +53,6 @@ export interface Referral {
   referred_user?: UserProfile;
 }
 
-export interface Commission {
-  id: string;
-  beneficiary_id: string;
-  source_user_id: string;
-  ticket_id: string;
-  amount_crypto: string;
-  percentage: string;
-  status: string;
-  created_at: string;
-}
-
 export interface Ticket {
   id: string;
   user_id: string;
@@ -105,6 +94,35 @@ export interface Withdrawal {
   reviewed_at?: string;
   created_at: string;
   requester?: UserProfile;
+}
+
+export interface Payment {
+  id: string;
+  user_id: string;
+  onramp_order_id: string;
+  onramp_txn_id?: string;
+  amount_inr: string;
+  crypto_received?: string;
+  crypto_currency: string;
+  ticket_quantity: number;
+  status: 'INITIATED' | 'PENDING' | 'COMPLETED' | 'FAILED';
+  webhook_payload?: Record<string, unknown>;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface Commission {
+  id: string;
+  beneficiary_id: string;
+  source_user_id: string;
+  ticket_id: string;
+  rate_applied: string;
+  amount_inr: string;
+  amount_crypto: string;
+  status: 'PENDING' | 'PAID' | 'CANCELLED';
+  created_at: string;
+  beneficiary?: UserProfile;
+  source_user?: UserProfile;
 }
 
 export interface PlatformConfig {

@@ -43,15 +43,15 @@ export const usePurchaseTicketMutation = () => {
             return response.data;
         },
         onSuccess: (data) => {
-            toast.success("Ticket purchase initiated");
-            // Redirect to payment gateway or show success
+            toast.success("Redirecting to payment gateway...");
             if (data?.payment_url) {
                 window.location.href = data.payment_url;
             }
             queryClient.invalidateQueries({ queryKey: ["my-tickets"] });
+            queryClient.invalidateQueries({ queryKey: ["user-profile"] });
         },
         onError: (error: any) => {
-            toast.error(error.message || "Failed to purchase tickets");
+            toast.error(error.message || "Failed to initiate purchase");
         },
     });
 };

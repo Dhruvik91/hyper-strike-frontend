@@ -18,6 +18,7 @@ export const useAdminStatsQuery = () => {
                 total_users: response.data.total_referrals,
                 managed_referrals: response.data.total_referrals,
                 total_commissions: response.data.total_commissions,
+                commissions: response.data.commissions,
             };
         },
     });

@@ -36,6 +36,10 @@ export const API_CONFIG = {
       REQUEST: "/withdrawals/request",
       MY_HISTORY: "/withdrawals/my",
     },
+    PAYMENTS: {
+      STATUS: (orderId: string) => `/payments/status/${orderId}`,
+      MOCK_SUCCESS: (orderId: string) => `/payments/mock-success/${orderId}`,
+    },
     ADMIN: {
       DASHBOARD: "/admin/dashboard",
       REFERRALS: "/admin/referrals",
