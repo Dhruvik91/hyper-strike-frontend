@@ -1,57 +1,34 @@
 "use client";
 
-import { useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { usePlatformConfigQuery, useUpdatePlatformConfigMutation } from "@/hooks/queries/use-super-admin";
-import { ConfigView } from "../components/ConfigView";
-
-const configSchema = z.object({
-    ticket_price_inr: z.number().min(10, "Minimum price is ₹10"),
-    referral_commission_user_pct: z.number().min(0).max(100),
-    referral_commission_admin_pct: z.number().min(0).max(100),
-});
-
-export type ConfigInput = z.infer<typeof configSchema>;
+import { motion } from "framer-motion";
+import { Settings } from "lucide-react";
+import { PlatformConfigForm } from "../components/PlatformConfigForm";
 
 export function ConfigContainer() {
-    const { data: config, isLoading } = usePlatformConfigQuery();
-    const updateMutation = useUpdatePlatformConfigMutation();
-
-    const form = useForm<ConfigInput>({
-        resolver: zodResolver(configSchema),
-        defaultValues: {
-            ticket_price_inr: 500,
-            referral_commission_user_pct: 10,
-            referral_commission_admin_pct: 5,
-        },
-    });
-
-    useEffect(() => {
-        if (config) {
-            form.reset({
-                ticket_price_inr: Number(config.ticket_price_inr),
-                referral_commission_user_pct: Number(config.referral_commission_user_pct),
-                referral_commission_admin_pct: Number(config.referral_commission_admin_pct),
-            });
-        }
-    }, [config, form]);
-
-    const onSubmit = (values: ConfigInput) => {
-        updateMutation.mutate({
-            ticket_price_inr: values.ticket_price_inr.toString(),
-            referral_commission_user_pct: values.referral_commission_user_pct.toString(),
-            referral_commission_admin_pct: values.referral_commission_admin_pct.toString(),
-        });
-    };
-
     return (
-        <ConfigView
-            form={form}
-            onSubmit={onSubmit}
-            isLoading={isLoading}
-            isUpdating={updateMutation.isPending}
-        />
+        <div className="space-y-10 pb-16">
+            {/* Header Section */}
+            <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5 }}
+            >
+                <div className="flex items-center gap-3 mb-2">
+                    <div className="bg-emerald-500/20 text-emerald-400 p-1.5 rounded-md">
+                        <Settings className="w-4 h-4" />
+                    </div>
+                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-emerald-500/80">System Configuration</span>
+                </div>
+                <h1 className="text-4xl font-black tracking-tight text-white drop-shadow-2xl">
+                    Platform Settings
+                </h1>
+                <p className="text-zinc-500 font-medium mt-1">
+                    Configure global platform parameters, pricing, and commission structures.
+                </p>
+            </motion.div>
+
+            {/* Config Form */}
+            <PlatformConfigForm />
+        </div>
     );
 }

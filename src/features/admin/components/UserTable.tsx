@@ -10,6 +10,7 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
+import { FundUserDialog } from "./FundUserDialog";
 
 interface UserTableProps {
     users: UserProfile[];
@@ -100,21 +101,27 @@ export function UserTable({ users, isLoading, onToggleStatus }: UserTableProps) 
                                     <p className="text-xs font-black text-white tracking-tight italic">₹{user.wallet_balance}</p>
                                 </td>
                                 <td className="px-6 py-4 text-right">
-                                    <DropdownMenu>
-                                        <DropdownMenuTrigger asChild>
-                                            <Button variant="ghost" size="icon" className="text-zinc-500 hover:text-white">
-                                                <MoreVertical className="w-4 h-4" />
-                                            </Button>
-                                        </DropdownMenuTrigger>
-                                        <DropdownMenuContent align="end" className="bg-zinc-950 border-white/10">
-                                            <DropdownMenuItem
-                                                className={`text-xs font-bold uppercase tracking-widest flex items-center gap-2 ${user.is_active ? 'text-red-400' : 'text-emerald-400'}`}
-                                                onClick={() => onToggleStatus(user.id)}
-                                            >
-                                                {user.is_active ? <><Ban className="w-3.5 h-3.5" /> Suspend</> : <><Check className="w-3.5 h-3.5" /> Activate</>}
-                                            </DropdownMenuItem>
-                                        </DropdownMenuContent>
-                                    </DropdownMenu>
+                                    <div className="flex items-center gap-2 justify-end">
+                                        <FundUserDialog 
+                                            userId={user.id} 
+                                            userName={user.first_name ? `${user.first_name} ${user.last_name || ''}` : user.whatsapp_number}
+                                        />
+                                        <DropdownMenu>
+                                            <DropdownMenuTrigger asChild>
+                                                <Button variant="ghost" size="icon" className="text-zinc-500 hover:text-white">
+                                                    <MoreVertical className="w-4 h-4" />
+                                                </Button>
+                                            </DropdownMenuTrigger>
+                                            <DropdownMenuContent align="end" className="bg-zinc-950 border-white/10">
+                                                <DropdownMenuItem
+                                                    className={`text-xs font-bold uppercase tracking-widest flex items-center gap-2 ${user.is_active ? 'text-red-400' : 'text-emerald-400'}`}
+                                                    onClick={() => onToggleStatus(user.id)}
+                                                >
+                                                    {user.is_active ? <><Ban className="w-3.5 h-3.5" /> Suspend</> : <><Check className="w-3.5 h-3.5" /> Activate</>}
+                                                </DropdownMenuItem>
+                                            </DropdownMenuContent>
+                                        </DropdownMenu>
+                                    </div>
                                 </td>
                             </motion.tr>
                         ))}

@@ -1,11 +1,14 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ShieldAlert, Settings } from "lucide-react";
+import { ShieldAlert } from "lucide-react";
 import { StatsGrid } from "@/features/dashboard/components/StatsGrid";
 import { UserTable } from "./UserTable";
-import { Button } from "@/components/ui/button";
 import { UserProfile } from "@/constants/interface";
+import { CreateAdminDialog } from "./CreateAdminDialog";
+import { CreateDrawDialog } from "./CreateDrawDialog";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 interface SuperAdminDashboardViewProps {
     stats: any[];
@@ -43,14 +46,14 @@ export function SuperAdminDashboardView({
                     </p>
                 </motion.div>
 
-                <div className="flex gap-3">
-                    <Button variant="outline" className="border-white/10 bg-white/[0.02] text-zinc-300 rounded-xl font-bold h-12">
-                        <Settings className="w-4 h-4 mr-2" />
-                        Core Config
-                    </Button>
-                    <Button className="bg-purple-600 hover:bg-purple-500 text-white font-black h-12 rounded-xl px-8 border-0 shadow-lg shadow-purple-900/20">
-                        Launch Mega Draw
-                    </Button>
+                <div className="flex flex-wrap gap-3">
+                    <Link href="/super-admin/config">
+                        <Button variant="outline" className="border-white/10 bg-white/5 text-zinc-300 hover:bg-white/10 rounded-xl font-bold h-11">
+                            Platform Config
+                        </Button>
+                    </Link>
+                    <CreateAdminDialog />
+                    <CreateDrawDialog />
                 </div>
             </div>
 
