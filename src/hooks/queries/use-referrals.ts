@@ -3,7 +3,9 @@ import httpService from "@/lib/http-service";
 import { API_CONFIG } from "@/constants/constants";
 import {
     Referral,
-    PaginatedResponse
+    PaginatedResponse,
+    ReferralLinkResponse,
+    ValidateReferralResponse
 } from "@/constants/interface";
 import { toast } from "sonner";
 
@@ -11,10 +13,10 @@ export const useMyReferralLinkQuery = () => {
     return useQuery({
         queryKey: ["referral-link"],
         queryFn: async () => {
-            const response = await httpService.get<{ referral_code: string; referral_link: string }>(
+            const response = await httpService.get<ReferralLinkResponse>(
                 API_CONFIG.ENDPOINTS.REFERRALS.MY_LINK
             );
-            return response.data.referral_link;
+            return response.data;
         },
     });
 };
@@ -22,7 +24,7 @@ export const useMyReferralLinkQuery = () => {
 export const useValidateReferralMutation = () => {
     return useMutation({
         mutationFn: async (code: string) => {
-            const response = await httpService.get<{ valid: boolean; owner_id?: string }>(
+            const response = await httpService.get<ValidateReferralResponse>(
                 API_CONFIG.ENDPOINTS.REFERRALS.VALIDATE(code),
             );
             return response.data;

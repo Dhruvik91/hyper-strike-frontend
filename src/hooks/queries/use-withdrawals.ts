@@ -3,7 +3,8 @@ import httpService from "@/lib/http-service";
 import { API_CONFIG } from "@/constants/constants";
 import {
     Withdrawal,
-    PaginatedResponse
+    PaginatedResponse,
+    WithdrawalRequest
 } from "@/constants/interface";
 import { toast } from "sonner";
 
@@ -27,15 +28,15 @@ export const useWithdrawalHistoryQuery = (page = 1, limit = 10) => {
 export const useRequestWithdrawalMutation = () => {
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: async (payload: { amount: number; crypto_currency: string; wallet_address: string }) => {
-            const response = await httpService.post<void>(
+        mutationFn: async (payload: WithdrawalRequest) => {
+            const response = await httpService.post<Withdrawal>(
                 API_CONFIG.ENDPOINTS.WITHDRAWALS.REQUEST,
                 payload
             );
             return response.data;
         },
         onSuccess: () => {
-            toast.success("Withdrawal request submitted");
+            toast.success("Withdrawal request submitted successfully");
             queryClient.invalidateQueries({ queryKey: ["withdrawal-history"] });
             queryClient.invalidateQueries({ queryKey: ["wallet-balance"] });
         },

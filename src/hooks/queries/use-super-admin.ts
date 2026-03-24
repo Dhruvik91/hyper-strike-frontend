@@ -1,7 +1,23 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import httpService from "@/lib/http-service";
 import { API_CONFIG } from "@/constants/constants";
-import { PaginatedResponse, UserProfile, Withdrawal, PlatformConfig } from "@/constants/interface";
+import { 
+    PaginatedResponse, 
+    UserProfile, 
+    Withdrawal, 
+    PlatformConfig,
+    AdminUser,
+    CreateAdminAutoRequest,
+    CreateAdminAutoResponse,
+    CreateAdminManualRequest,
+    FundUserWalletRequest,
+    FundUserWalletResponse,
+    CreateDrawRequest,
+    SetWinnersRequest,
+    ReviewWithdrawalRequest,
+    UpdateConfigRequest,
+    Draw
+} from "@/constants/interface";
 
 import { toast } from "sonner";
 
@@ -50,16 +66,19 @@ export const usePendingWithdrawalsQuery = () => {
 export const useReviewWithdrawalMutation = () => {
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: async ({ id, action, rejection_reason }: { id: string; action: 'approve' | 'reject'; rejection_reason?: string }) => {
+        mutationFn: async ({ id, action, rejection_reason }: ReviewWithdrawalRequest & { id: string }) => {
             const response = await httpService.post<Withdrawal>(
                 API_CONFIG.ENDPOINTS.SUPER_ADMIN.REVIEW_WITHDRAWAL(id),
-                { action, rejection_reason }
+                { action, rejection_reason } satisfies ReviewWithdrawalRequest
             );
             return response.data;
         },
         onSuccess: (_, variables) => {
             toast.success(`Withdrawal ${variables.action}d successfully`);
             queryClient.invalidateQueries({ queryKey: ["pending-withdrawals"] });
+        },
+        onError: (error: any) => {
+            toast.error(error.message || "Failed to review withdrawal");
         },
     });
 };
@@ -79,7 +98,7 @@ export const usePlatformConfigQuery = () => {
 export const useUpdatePlatformConfigMutation = () => {
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: async (config: Partial<PlatformConfig>) => {
+        mutationFn: async (config: UpdateConfigRequest) => {
             const response = await httpService.put<PlatformConfig>(
                 API_CONFIG.ENDPOINTS.SUPER_ADMIN.CONFIG,
                 config
@@ -87,8 +106,25 @@ export const useUpdatePlatformConfigMutation = () => {
             return response.data;
         },
         onSuccess: () => {
-            toast.success("Platform configuration updated");
+            toast.success("Platform configuration updated successfully");
             queryClient.invalidateQueries({ queryKey: ["platform-config"] });
+            queryClient.invalidateQueries({ queryKey: ["ticket-price"] });
+        },
+        onError: (error: any) => {
+            toast.error(error.message || "Failed to update platform configuration");
+        },
+    });
+};
+
+export const useSuperAdminAdminsQuery = (page = 1, limit = 20, search = "", startDate = "", endDate = "") => {
+    return useQuery({
+        queryKey: ["super-admin-admins", page, limit, search, startDate, endDate],
+        queryFn: async () => {
+            const response = await httpService.get<PaginatedResponse<AdminUser>>(
+                API_CONFIG.ENDPOINTS.SUPER_ADMIN.ADMINS,
+                { params: { page, limit, search, startDate, endDate } }
+            );
+            return response.data;
         },
     });
 };
@@ -97,9 +133,9 @@ export const useFundUserMutation = () => {
     const queryClient = useQueryClient();
     return useMutation({
         mutationFn: async ({ userId, amount_inr }: { userId: string; amount_inr: number }) => {
-            const response = await httpService.post<UserProfile>(
+            const response = await httpService.post<FundUserWalletResponse>(
                 API_CONFIG.ENDPOINTS.SUPER_ADMIN.FUND_USER(userId),
-                { amount_inr }
+                { amount_inr } satisfies FundUserWalletRequest
             );
             return response.data;
         },
@@ -113,10 +149,10 @@ export const useFundUserMutation = () => {
     });
 };
 
-export const useCreateAdminMutation = () => {
+export const useCreateAdminManualMutation = () => {
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: async (data: { email: string; password: string; whatsapp_number: string }) => {
+        mutationFn: async (data: CreateAdminManualRequest) => {
             const response = await httpService.post<UserProfile>(
                 API_CONFIG.ENDPOINTS.SUPER_ADMIN.CREATE_ADMIN,
                 data
@@ -125,7 +161,27 @@ export const useCreateAdminMutation = () => {
         },
         onSuccess: () => {
             toast.success("Admin account created successfully");
-            queryClient.invalidateQueries({ queryKey: ["super-admin-users"] });
+            queryClient.invalidateQueries({ queryKey: ["super-admin-admins"] });
+        },
+        onError: (error: any) => {
+            toast.error(error.message || "Failed to create admin account");
+        },
+    });
+};
+
+export const useCreateAdminAutoMutation = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: async (data: CreateAdminAutoRequest) => {
+            const response = await httpService.post<CreateAdminAutoResponse>(
+                API_CONFIG.ENDPOINTS.SUPER_ADMIN.CREATE_ADMIN_AUTO,
+                data
+            );
+            return response.data;
+        },
+        onSuccess: () => {
+            toast.success("Admin account created with auto-generated credentials");
+            queryClient.invalidateQueries({ queryKey: ["super-admin-admins"] });
         },
         onError: (error: any) => {
             toast.error(error.message || "Failed to create admin account");
@@ -136,8 +192,8 @@ export const useCreateAdminMutation = () => {
 export const useCreateDrawMutation = () => {
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: async (data: { type: string; scheduled_at: string }) => {
-            const response = await httpService.post(
+        mutationFn: async (data: CreateDrawRequest) => {
+            const response = await httpService.post<Draw>(
                 API_CONFIG.ENDPOINTS.SUPER_ADMIN.DRAWS,
                 data
             );
@@ -145,7 +201,8 @@ export const useCreateDrawMutation = () => {
         },
         onSuccess: () => {
             toast.success("Draw created successfully");
-            queryClient.invalidateQueries({ queryKey: ["draws"] });
+            queryClient.invalidateQueries({ queryKey: ["all-draws"] });
+            queryClient.invalidateQueries({ queryKey: ["upcoming-draw"] });
         },
         onError: (error: any) => {
             toast.error(error.message || "Failed to create draw");
@@ -164,7 +221,8 @@ export const useSelectWinnersMutation = () => {
         },
         onSuccess: () => {
             toast.success("Winners selected successfully");
-            queryClient.invalidateQueries({ queryKey: ["draws"] });
+            queryClient.invalidateQueries({ queryKey: ["all-draws"] });
+            queryClient.invalidateQueries({ queryKey: ["draw-winners"] });
         },
         onError: (error: any) => {
             toast.error(error.message || "Failed to select winners");
@@ -175,16 +233,17 @@ export const useSelectWinnersMutation = () => {
 export const useSetWinnersMutation = () => {
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: async ({ drawId, winners }: { drawId: string; winners: Array<{ user_id: string; ticket_id: string; win_type: string; prize_amount_inr: string }> }) => {
+        mutationFn: async ({ drawId, winner_ticket_ids }: { drawId: string; winner_ticket_ids: string[] }) => {
             const response = await httpService.post(
                 API_CONFIG.ENDPOINTS.SUPER_ADMIN.SET_WINNERS(drawId),
-                winners
+                { winner_ticket_ids } satisfies SetWinnersRequest
             );
             return response.data;
         },
         onSuccess: () => {
             toast.success("Winners assigned successfully");
-            queryClient.invalidateQueries({ queryKey: ["draws"] });
+            queryClient.invalidateQueries({ queryKey: ["all-draws"] });
+            queryClient.invalidateQueries({ queryKey: ["draw-winners"] });
         },
         onError: (error: any) => {
             toast.error(error.message || "Failed to assign winners");

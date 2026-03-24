@@ -47,8 +47,10 @@ export const API_CONFIG = {
     },
     SUPER_ADMIN: {
       USERS: "/super-admin/users",
+      ADMINS: "/super-admin/admins",
       TOGGLE_USER: (id: string) => `/super-admin/users/${id}/toggle-active`,
       CREATE_ADMIN: "/super-admin/admins",
+      CREATE_ADMIN_AUTO: "/super-admin/admin/create",
       FUND_USER: (id: string) => `/super-admin/users/${id}/fund`,
       DRAWS: "/super-admin/draws",
       SELECT_WINNERS: (id: string) => `/super-admin/draws/${id}/select-winners`,
