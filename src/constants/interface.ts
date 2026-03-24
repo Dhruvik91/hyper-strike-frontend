@@ -53,12 +53,20 @@ export interface Referral {
 export interface Ticket {
   id: string;
   user_id: string;
+  draw_id: string;
   ticket_number: string;
-  draw_id?: string;
-  is_winner: boolean;
   purchase_price_inr?: string;
-  status?: 'PENDING' | 'ACTIVE' | 'USED' | 'CANCELLED';
+  purchase_price_crypto?: string;
+  is_winner: boolean;
   created_at: string;
+  updated_at: string;
+}
+
+export interface PaymentStatus {
+  status: "PENDING" | "SUCCESS" | "FAILED";
+  order_id: string;
+  tickets?: Ticket[];
+  message?: string;
 }
 
 export interface Draw {
