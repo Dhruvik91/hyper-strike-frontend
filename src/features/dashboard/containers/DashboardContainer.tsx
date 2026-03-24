@@ -2,8 +2,9 @@
 
 import { useProfileQuery } from "@/hooks/queries/use-auth";
 import { useWalletBalanceQuery } from "@/hooks/queries/use-user";
-import { useMyReferralLinkQuery, useMyReferralsQuery } from "@/hooks/queries/use-referrals";
+import { useMyReferralLinkQuery } from "@/hooks/queries/use-referrals";
 import { useMyTicketsQuery } from "@/hooks/queries/use-tickets";
+import { useUserReferralsQuery } from "@/hooks/queries/use-user";
 import { toast } from "sonner";
 import { DashboardView } from "../components/DashboardView";
 import { Ticket, Users, Wallet, Trophy } from "lucide-react";
@@ -11,9 +12,12 @@ import { Ticket, Users, Wallet, Trophy } from "lucide-react";
 export function DashboardContainer() {
     const { data: user } = useProfileQuery();
     const { data: wallet } = useWalletBalanceQuery();
-    const { data: referralLink } = useMyReferralLinkQuery();
+    const { data: referralLinkData } = useMyReferralLinkQuery();
     const { data: ticketsResponse } = useMyTicketsQuery(1, 10);
-    const { data: referralsResponse } = useMyReferralsQuery(1, 10);
+    const { data: referralsData } = useUserReferralsQuery();
+
+    const walletBalanceINR = wallet ? parseFloat(wallet.wallet_balance_inr) : 0;
+    const winningTickets = ticketsResponse?.items?.filter(t => t.is_winner).length || 0;
 
     const stats = [
         {
@@ -25,23 +29,23 @@ export function DashboardContainer() {
         },
         {
             title: "Network Size",
-            value: referralsResponse?.total?.toString() || "0",
+            value: referralsData?.length?.toString() || "0",
             icon: Users,
             trend: "Direct referrals",
             color: "text-emerald-400"
         },
         {
             title: "Wallet Balance",
-            value: `₹${wallet?.balance || 0}`,
+            value: `₹${walletBalanceINR.toLocaleString("en-IN", { maximumFractionDigits: 2 })}`,
             icon: Wallet,
-            trend: `₹${wallet?.commission_earned || 0} earned`,
+            trend: `${wallet?.crypto_currency || "USDT"} balance`,
             color: "text-purple-400"
         },
         {
-            title: "Tournament Wins",
-            value: "0",
+            title: "Winning Tickets",
+            value: winningTickets.toString(),
             icon: Trophy,
-            trend: "Lucky Draw History",
+            trend: "Lucky Draw Wins",
             color: "text-amber-400"
         }
     ];
@@ -50,12 +54,12 @@ export function DashboardContainer() {
         id: ticket.id,
         action: `Purchased Ticket #${ticket.ticket_number}`,
         date: new Date(ticket.created_at).toLocaleDateString(),
-        amount: `-₹${ticket.purchase_price_inr}`
+        amount: ticket.purchase_price_inr ? `-₹${ticket.purchase_price_inr}` : "N/A"
     })) || [];
 
     const handleCopyReferral = () => {
-        if (referralLink) {
-            navigator.clipboard.writeText(referralLink);
+        if (referralLinkData?.referral_link) {
+            navigator.clipboard.writeText(referralLinkData.referral_link);
             toast.success("Referral link copied!");
         } else {
             toast.error("Referral link not available");
@@ -65,7 +69,7 @@ export function DashboardContainer() {
     return (
         <DashboardView
             user={user}
-            referralLink={referralLink}
+            referralLink={referralLinkData?.referral_link}
             ticketsTotal={ticketsResponse?.total || 0}
             stats={stats}
             recentActivity={recentActivity.slice(0, 5)}
