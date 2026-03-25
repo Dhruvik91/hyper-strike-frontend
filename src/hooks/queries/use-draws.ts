@@ -58,7 +58,7 @@ export const useAllDrawsQuery = (page = 1, limit = 20) => {
     });
 };
 
-export const useDrawDetailsQuery = (drawId: string) => {
+export const useDrawDetailsQuery = (drawId: string, enabled = true) => {
     return useQuery({
         queryKey: ["draw-details", drawId],
         queryFn: async () => {
@@ -67,6 +67,8 @@ export const useDrawDetailsQuery = (drawId: string) => {
             );
             return response.data;
         },
-        enabled: !!drawId,
+        enabled: !!drawId && enabled,
     });
 };
+
+export const useDrawByIdQuery = useDrawDetailsQuery;

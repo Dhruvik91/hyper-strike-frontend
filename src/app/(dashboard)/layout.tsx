@@ -71,6 +71,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
         { name: "Lucky Draws", href: FRONTEND_ROUTES.USER.DRAWS || "/dashboard/draws", icon: Trophy },
         { name: "Referrals", href: FRONTEND_ROUTES.USER.REFERRALS, icon: Users },
         { name: "Wallet", href: FRONTEND_ROUTES.USER.WALLET, icon: Wallet },
+        { name: "Withdrawals", href: FRONTEND_ROUTES.USER.WITHDRAWALS, icon: History },
       ];
     }
 

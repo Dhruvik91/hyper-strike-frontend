@@ -73,7 +73,7 @@ export function MyTicketsList() {
               key={ticket.id}
               className="flex items-center gap-4 p-4 rounded-lg border bg-card hover:bg-accent/50 transition-colors"
             >
-              <div className="flex-shrink-0">
+              <div className="shrink-0">
                 {ticket.is_winner ? (
                   <div className="h-12 w-12 rounded-full bg-yellow-500/20 flex items-center justify-center">
                     <Trophy className="h-6 w-6 text-yellow-600" />
@@ -91,7 +91,7 @@ export function MyTicketsList() {
                 </p>
               </div>
               {ticket.is_winner && (
-                <div className="flex-shrink-0">
+                <div className="shrink-0">
                   <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-yellow-500/20 text-yellow-700">
                     Winner
                   </span>

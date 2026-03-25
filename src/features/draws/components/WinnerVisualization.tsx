@@ -7,7 +7,7 @@ import { DrawWinner } from "@/constants/interface";
 
 interface WinnerVisualizationProps {
     winners: DrawWinner[];
-    drawType: 'WEEKLY' | 'MEGA';
+    drawType: 'WEEKLY' | 'MEGA' | 'DAILY';
     onComplete?: () => void;
 }
 

@@ -73,6 +73,7 @@ export const FRONTEND_ROUTES = {
     WALLET: "/wallet",
     PROFILE: "/profile",
     DRAWS: "/dashboard/draws",
+    WITHDRAWALS: "/dashboard/withdrawals",
   },
 
   ADMIN: {
