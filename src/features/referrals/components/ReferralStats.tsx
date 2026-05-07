@@ -7,7 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 interface ReferralStatsProps {
     totalReferrals: number;
     activeReferrals: number;
-    commissionEarned: number;
+    commissionEarned: number | string;
 }
 
 export function ReferralStats({ totalReferrals, activeReferrals, commissionEarned }: ReferralStatsProps) {

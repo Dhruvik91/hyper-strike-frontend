@@ -11,7 +11,7 @@ export function TicketsContainer() {
     const [quantity, setQuantity] = useState(1);
 
     const handlePurchase = () => {
-        purchaseMutation.mutate(quantity);
+        purchaseMutation.mutate({ quantity });
     };
 
     return (

@@ -154,14 +154,14 @@ export function DrawDetailsContainer({ drawId }: DrawDetailsContainerProps) {
                                                     : `User #${winner.user_id.slice(-6)}`}
                                             </p>
                                             <p className="text-xs text-zinc-500 font-bold uppercase tracking-wider mt-1">
-                                                {winner.win_type.replace('_', ' ')}
+                                                {winner.win_type?.replace('_', ' ') || 'AUTO'}
                                             </p>
                                         </div>
                                     </div>
                                     <div className="text-right">
                                         <p className="text-2xl font-black text-emerald-400">₹{winner.prize_amount_inr}</p>
                                         <p className="text-xs text-zinc-500 font-bold mt-1">
-                                            {format(new Date(winner.created_at), "MMM dd, yyyy")}
+                                            {winner.created_at ? format(new Date(winner.created_at), "MMM dd, yyyy") : 'N/A'}
                                         </p>
                                     </div>
                                 </motion.div>

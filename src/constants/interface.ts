@@ -40,6 +40,11 @@ export interface WalletBalance {
   wallet_balance_inr: string;
   wallet_balance_crypto: string;
   crypto_currency: string;
+  balance?: string;
+  commission_earned?: number | string;
+  crypto_balance?: number;
+  total_balance?: number | string;
+  withdrawn?: number | string;
 }
 
 export interface Referral {
@@ -58,25 +63,26 @@ export interface Ticket {
   purchase_price_inr?: string;
   purchase_price_crypto?: string;
   is_winner: boolean;
+  status?: 'ACTIVE' | 'USED' | string;
   created_at: string;
   updated_at: string;
 }
 
 export interface PaymentStatus {
-  status: "PENDING" | "SUCCESS" | "FAILED";
-  order_id: string;
-  tickets?: Ticket[];
+  status: "PENDING" | "SUCCESS" | "FAILED" | string;
+  order_id?: string;
+  tickets?: any[];
   message?: string;
 }
 
 export interface Draw {
   id: string;
   draw_date: string;
-  status: 'upcoming' | 'completed';
+  status: 'UPCOMING' | 'ACTIVE' | 'COMPLETED';
   total_tickets: number;
   winners_selected?: boolean;
-  type?: 'WEEKLY' | 'MEGA' | 'DAILY';
-  scheduled_at?: string;
+  type: 'WEEKLY' | 'MEGA' | 'DAILY';
+  scheduled_at: string;
   completed_at?: string;
   created_at: string;
   created_by?: string;
@@ -219,6 +225,10 @@ export interface PurchaseTicketsResponse {
 export interface PaymentStatusResponse {
   status: string;
   message?: string;
+  order_id?: string;
+  amount?: number;
+  currency?: string;
+  tickets?: { id: string; ticket_number: string }[];
 }
 
 // ── REFERRALS ───────────────────────────────────────────────
@@ -292,11 +302,17 @@ export interface FundUserWalletResponse {
 }
 
 export interface CreateDrawRequest {
-  draw_date: string;
+  type: 'DAILY' | 'WEEKLY' | 'MEGA';
+  scheduled_at: string;
 }
 
 export interface SetWinnersRequest {
-  winner_ticket_ids: string[];
+  winners: {
+    user_id: string;
+    ticket_id: string;
+    win_type: 'RANDOM_TICKET' | 'TOP_REFERRER';
+    prize_amount_inr: string;
+  }[];
 }
 
 export interface ReviewWithdrawalRequest {

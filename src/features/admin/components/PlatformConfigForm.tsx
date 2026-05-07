@@ -25,9 +25,9 @@ export function PlatformConfigForm() {
     useEffect(() => {
         if (config) {
             reset({
-                ticket_price_inr: config.ticket_price_inr,
-                referral_commission_user_pct: config.referral_commission_user_pct,
-                referral_commission_admin_pct: config.referral_commission_admin_pct,
+                ticket_price_inr: config.ticket_price_inr?.toString(),
+                referral_commission_user_pct: config.referral_commission_user_pct || "",
+                referral_commission_admin_pct: config.referral_commission_admin_pct || "",
             });
         }
     }, [config, reset]);

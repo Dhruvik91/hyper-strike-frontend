@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createAdminSchema, CreateAdminFormData } from "@/lib/validations/super-admin";
-import { useCreateAdminMutation } from "@/hooks/queries/use-super-admin";
+import { useCreateAdminManualMutation } from "@/hooks/queries/use-super-admin";
 import {
     Dialog,
     DialogContent,
@@ -19,7 +19,7 @@ import { UserPlus, Mail, Lock, Phone } from "lucide-react";
 
 export function CreateAdminDialog() {
     const [open, setOpen] = useState(false);
-    const createAdminMutation = useCreateAdminMutation();
+    const createAdminMutation = useCreateAdminManualMutation();
 
     const {
         register,

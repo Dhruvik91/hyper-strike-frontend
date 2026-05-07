@@ -111,7 +111,7 @@ export function TicketDetailView({ ticket, draw, isLoading }: TicketDetailViewPr
                                                     Winner
                                                 </span>
                                             </>
-                                        ) : draw?.status === 'completed' ? (
+                                        ) : draw?.status === 'COMPLETED' ? (
                                             <>
                                                 <XCircle className="w-5 h-5 text-zinc-400" />
                                                 <span className="px-4 py-2 rounded-full text-sm font-black uppercase tracking-wider bg-zinc-500/20 text-zinc-400 border border-zinc-500/30">
@@ -152,7 +152,7 @@ export function TicketDetailView({ ticket, draw, isLoading }: TicketDetailViewPr
                                             <div className="flex items-center gap-2 text-purple-400">
                                                 <Calendar className="w-4 h-4" />
                                                 <p className="text-lg font-bold">
-                                                    {format(new Date(draw.draw_date), "MMMM dd, yyyy 'at' hh:mm a")}
+                                                    {format(new Date(draw.scheduled_at), "MMMM dd, yyyy 'at' hh:mm a")}
                                                 </p>
                                             </div>
                                         </div>
@@ -160,7 +160,7 @@ export function TicketDetailView({ ticket, draw, isLoading }: TicketDetailViewPr
                                         <div>
                                             <p className="text-xs font-bold text-zinc-400 uppercase tracking-widest mb-2">Draw Status</p>
                                             <div className="flex items-center gap-2">
-                                                {draw.status === 'completed' ? (
+                                                {draw.status === 'COMPLETED' ? (
                                                     <>
                                                         <CheckCircle className="w-5 h-5 text-emerald-400" />
                                                         <span className="px-4 py-2 rounded-full text-sm font-black uppercase tracking-wider bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">

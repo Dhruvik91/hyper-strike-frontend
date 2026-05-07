@@ -55,7 +55,7 @@ export function DrawDetailsView({
                 </h1>
                 {draw && (
                     <p className="text-zinc-500 font-medium mt-4 text-base md:text-lg leading-relaxed">
-                        Results for {format(new Date(draw.draw_date), "MMMM dd, yyyy 'at' hh:mm a")}
+                        Results for {format(new Date(draw.scheduled_at), "MMMM dd, yyyy 'at' hh:mm a")}
                     </p>
                 )}
             </motion.div>
@@ -75,10 +75,10 @@ export function DrawDetailsView({
                                         <p className="text-xs font-bold uppercase tracking-widest">Draw Date</p>
                                     </div>
                                     <p className="text-lg font-black text-white">
-                                        {format(new Date(draw.draw_date), "MMM dd, yyyy")}
+                                        {format(new Date(draw.scheduled_at), "MMM dd, yyyy")}
                                     </p>
                                     <p className="text-sm text-zinc-500">
-                                        {format(new Date(draw.draw_date), "hh:mm a")}
+                                        {format(new Date(draw.scheduled_at), "hh:mm a")}
                                     </p>
                                 </div>
 
@@ -95,7 +95,7 @@ export function DrawDetailsView({
 
                                 <div className="space-y-2">
                                     <div className="flex items-center gap-2 text-zinc-400 mb-1">
-                                        {draw.status === 'completed' ? (
+                                        {draw.status === 'COMPLETED' ? (
                                             <CheckCircle className="w-4 h-4" />
                                         ) : (
                                             <Clock className="w-4 h-4" />
@@ -104,7 +104,7 @@ export function DrawDetailsView({
                                     </div>
                                     <div className="flex items-center gap-2">
                                         <span className={`px-4 py-2 rounded-full text-sm font-black uppercase tracking-wider border ${
-                                            draw.status === 'completed' 
+                                            draw.status === 'COMPLETED' 
                                                 ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30'
                                                 : 'bg-amber-500/20 text-amber-400 border-amber-500/30'
                                         }`}>
@@ -132,7 +132,7 @@ export function DrawDetailsView({
                                 <Trophy className="w-16 h-16 text-zinc-700 mx-auto mb-6" />
                                 <h3 className="text-xl font-bold text-white mb-2">No Winners Yet</h3>
                                 <p className="text-zinc-500 text-sm">
-                                    {draw?.status === 'upcoming' 
+                                    {draw?.status === 'UPCOMING' 
                                         ? 'Winners will be announced after the draw is completed.'
                                         : 'No winners have been selected for this draw yet.'}
                                 </p>

@@ -9,28 +9,46 @@ import { withdrawalRequestSchema, WithdrawalRequestInput } from "@/lib/validatio
 import { useRequestWithdrawalMutation } from "@/hooks/queries/use-withdrawals";
 import { useWalletBalanceQuery } from "@/hooks/queries/use-user";
 
-export function WithdrawalRequestForm() {
-  const withdrawalMutation = useRequestWithdrawalMutation();
-  const { data: wallet } = useWalletBalanceQuery();
+interface WithdrawalRequestFormProps {
+  availableBalance?: number;
+  cryptoCurrency?: string;
+  isSubmitting?: boolean;
+  onSubmit?: (values: WithdrawalRequestInput) => void;
+}
+
+export function WithdrawalRequestForm({
+  availableBalance: propAvailableBalance,
+  cryptoCurrency: propCryptoCurrency,
+  isSubmitting: propIsSubmitting,
+  onSubmit: propOnSubmit,
+}: WithdrawalRequestFormProps) {
+  const internalWithdrawalMutation = useRequestWithdrawalMutation();
+  const { data: internalWallet } = useWalletBalanceQuery();
+
+  const isSubmitting = propIsSubmitting ?? internalWithdrawalMutation.isPending;
+  const cryptoCurrency = propCryptoCurrency ?? internalWallet?.crypto_currency ?? "USDT";
+  const availableBalance = propAvailableBalance ?? (internalWallet ? parseFloat(internalWallet.wallet_balance_crypto) : 0);
 
   const form = useForm<WithdrawalRequestInput>({
     resolver: zodResolver(withdrawalRequestSchema),
     defaultValues: {
       amount: 0,
-      crypto_currency: wallet?.crypto_currency || "USDT",
+      crypto_currency: cryptoCurrency,
       wallet_address: "",
     },
   });
 
-  const onSubmit = (data: WithdrawalRequestInput) => {
-    withdrawalMutation.mutate(data, {
-      onSuccess: () => {
-        form.reset();
-      },
-    });
+  const handleSubmit = (data: WithdrawalRequestInput) => {
+    if (propOnSubmit) {
+      propOnSubmit(data);
+    } else {
+      internalWithdrawalMutation.mutate(data, {
+        onSuccess: () => {
+          form.reset();
+        },
+      });
+    }
   };
-
-  const availableBalance = wallet ? parseFloat(wallet.wallet_balance_crypto) : 0;
 
   return (
     <Card>
@@ -45,11 +63,11 @@ export function WithdrawalRequestForm() {
       </CardHeader>
       <CardContent>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
             <div className="rounded-lg bg-muted p-4">
               <p className="text-sm text-muted-foreground">Available Balance</p>
               <p className="text-2xl font-bold">
-                {availableBalance.toFixed(8)} {wallet?.crypto_currency || "USDT"}
+                {availableBalance.toFixed(8)} {cryptoCurrency}
               </p>
             </div>
 
@@ -113,9 +131,9 @@ export function WithdrawalRequestForm() {
             <Button
               type="submit"
               className="w-full h-12 text-base"
-              disabled={withdrawalMutation.isPending}
+              disabled={isSubmitting}
             >
-              {withdrawalMutation.isPending ? "Submitting..." : "Request Withdrawal"}
+              {isSubmitting ? "Submitting..." : "Request Withdrawal"}
             </Button>
           </form>
         </Form>

@@ -233,10 +233,10 @@ export const useSelectWinnersMutation = () => {
 export const useSetWinnersMutation = () => {
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: async ({ drawId, winner_ticket_ids }: { drawId: string; winner_ticket_ids: string[] }) => {
+        mutationFn: async ({ drawId, winners }: { drawId: string; winners: SetWinnersRequest['winners'] }) => {
             const response = await httpService.post(
                 API_CONFIG.ENDPOINTS.SUPER_ADMIN.SET_WINNERS(drawId),
-                { winner_ticket_ids } satisfies SetWinnersRequest
+                { winners } satisfies SetWinnersRequest
             );
             return response.data;
         },

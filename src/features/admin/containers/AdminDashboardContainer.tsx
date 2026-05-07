@@ -1,23 +1,23 @@
 "use client";
 
-import { useAdminStatsQuery } from "@/hooks/queries/use-admin";
+import { useAdminDashboardQuery } from "@/hooks/queries/use-admin";
 import { AdminDashboardView } from "../components/AdminDashboardView";
 import { Users, DollarSign, TrendingUp, Activity } from "lucide-react";
 
 export function AdminDashboardContainer() {
-    const { data: stats, isLoading } = useAdminStatsQuery();
+    const { data: stats, isLoading } = useAdminDashboardQuery();
 
     const adminStats = [
         {
             title: "Network Volume",
-            value: stats?.total_users?.toString() || "0",
+            value: stats?.total_referrals?.toString() || "0",
             icon: Users,
             trend: "Total platform users",
             color: "text-blue-400"
         },
         {
             title: "Direct Influence",
-            value: stats?.managed_referrals?.toString() || "0",
+            value: stats?.total_referrals?.toString() || "0",
             icon: TrendingUp,
             trend: "Users under your ID",
             color: "text-emerald-400"
