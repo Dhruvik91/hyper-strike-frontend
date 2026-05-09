@@ -66,6 +66,16 @@ export const FRONTEND_ROUTES = {
   HOME: "/",
   LOGIN: "/login",
   REGISTER: "/register",
+  PUBLIC: {
+    CONTACT: "/contact-us",
+    PRIVACY: "/privacy-policy",
+    TERMS: "/terms-and-conditions",
+    TRIVIA: "/trivia",
+    COMMUNITY: "/community",
+    REWARDS: "/rewards",
+    VIP: "/vip",
+    FAQ: "/faq",
+  },
   USER: {
     DASHBOARD: "/dashboard",
     TICKETS: "/tickets",
