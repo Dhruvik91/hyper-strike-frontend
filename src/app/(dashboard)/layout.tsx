@@ -46,10 +46,10 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
 
   if (isProfileLoading) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
+      <div className="min-h-screen bg-[#050505] flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
-          <div className="w-12 h-12 border-4 border-emerald-500/30 border-t-emerald-500 rounded-full animate-spin" />
-          <p className="text-zinc-500 animate-pulse font-medium">Loading your striking experience...</p>
+          <div className="w-12 h-12 border-4 border-primary/30 border-t-primary rounded-full animate-spin glow-primary" />
+          <p className="text-muted-foreground animate-pulse font-medium uppercase tracking-widest text-xs">Loading your striking experience...</p>
         </div>
       </div>
     );
@@ -104,15 +104,15 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground flex flex-col md:flex-row">
+    <div className="min-h-screen bg-[#050505] text-white flex flex-col md:flex-row selection:bg-primary/30">
       {/* Mobile Header */}
-      <div className="md:hidden flex items-center justify-between p-4 border-b border-white/10 bg-black/40 backdrop-blur-md sticky top-0 z-50">
-        <Link href={FRONTEND_ROUTES.HOME} className="flex items-center gap-2">
-          <div className="bg-gradient-to-br from-blue-600 to-indigo-700 p-1.5 rounded-lg">
-            <div className="w-5 h-5 flex items-center justify-center text-white font-black text-xs italic select-none">H</div>
+      <div className="md:hidden flex items-center justify-between p-4 border-b border-white/5 bg-[#050505]/80 backdrop-blur-3xl sticky top-0 z-50">
+        <Link href={FRONTEND_ROUTES.HOME} className="flex items-center gap-3 group">
+          <div className="relative w-10 h-10 glow-primary rounded-full border border-primary/50 p-1 bg-black group-hover:scale-105 transition-transform duration-300">
+             <img src="/images/hero-h.png" alt="Logo" className="w-full h-full object-contain" />
           </div>
-          <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-white/60">
-            HyperStrike
+          <span className="text-xl font-black tracking-tighter leading-none italic group-hover:text-primary transition-colors duration-300">
+            HYPER<span className="text-gradient-gold">STRIKEX</span>
           </span>
         </Link>
         <Button variant="ghost" size="icon" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
@@ -123,26 +123,28 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       {/* Sidebar Navigation */}
       <aside
         className={`
-          fixed md:sticky top-0 left-0 z-40 h-[100dvh] w-72 border-r border-white/10 bg-zinc-950/80 backdrop-blur-xl transition-transform duration-300 ease-in-out flex flex-col
+          fixed md:sticky top-0 left-0 z-40 h-[100dvh] w-72 border-r border-white/5 bg-black/40 backdrop-blur-3xl transition-transform duration-300 ease-in-out flex flex-col
           ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}
         `}
       >
         <div className="p-8 hidden md:flex items-center gap-3">
-          <div className="bg-gradient-to-br from-blue-600 to-indigo-700 p-2 rounded-xl shadow-lg ring-1 ring-white/20">
-            <div className="w-7 h-7 flex items-center justify-center text-white font-black text-lg italic select-none">H</div>
-          </div>
-          <span className="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-white/40 tracking-tight">
-            HyperStrike
-          </span>
+          <Link href={FRONTEND_ROUTES.HOME} className="flex items-center gap-3 group">
+            <div className="relative w-12 h-12 glow-primary rounded-full border border-primary/50 p-1 bg-black group-hover:scale-105 transition-transform duration-300">
+               <img src="/images/hero-h.png" alt="Logo" className="w-full h-full object-contain" />
+            </div>
+            <span className="text-2xl font-black tracking-tighter leading-none italic group-hover:text-primary transition-colors duration-300">
+              HYPER<span className="text-gradient-gold">STRIKEX</span>
+            </span>
+          </Link>
         </div>
 
         <div className="px-6 py-4 flex items-center gap-3 mb-4">
-          <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-emerald-500/20 to-blue-500/20 border border-white/10 flex items-center justify-center text-emerald-400 font-bold">
+          <div className="w-10 h-10 rounded-full bg-gradient-primary border border-primary/50 flex items-center justify-center text-white font-black text-lg glow-primary shadow-[0_0_15px_rgba(161,0,255,0.5)]">
             {user.first_name?.[0] || user.whatsapp_number?.[0] || 'U'}
           </div>
           <div className="flex flex-col min-w-0">
-            <span className="text-sm font-bold text-white truncate">{user.first_name || 'Striker'}</span>
-            <span className="text-xs text-zinc-500 font-medium truncate">{user.whatsapp_number}</span>
+            <span className="text-sm font-black text-white truncate uppercase tracking-widest">{user.first_name || 'Striker'}</span>
+            <span className="text-[10px] text-muted-foreground font-medium truncate uppercase tracking-widest">{user.whatsapp_number}</span>
           </div>
           {role === UserRole.SUPER_ADMIN && (
             <ShieldCheck className="h-4 w-4 text-amber-400 ml-auto shrink-0" />
@@ -150,7 +152,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
         </div>
 
         <nav className="flex-1 px-4 py-2 space-y-1 overflow-y-auto custom-scrollbar">
-          <div className="px-3 mb-2 text-[10px] uppercase tracking-widest text-zinc-600 font-bold">Menu</div>
+          <div className="px-3 mb-2 text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-black">Menu</div>
           {navigation.map((item) => {
             const isActive = pathname === item.href;
             return (
@@ -159,21 +161,21 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                 href={item.href}
                 onClick={() => setIsMobileMenuOpen(false)}
                 className={`
-                  flex items-center gap-3 px-3 py-3 rounded-xl transition-all duration-200 group relative
+                  flex items-center gap-3 px-3 py-3 rounded-xl transition-all duration-300 group relative overflow-hidden
                   ${isActive
-                    ? "bg-emerald-500/10 text-emerald-400 font-semibold"
-                    : "text-zinc-500 hover:bg-white/5 hover:text-white"
+                    ? "bg-primary/20 text-white shadow-[0_0_15px_rgba(161,0,255,0.2)] border border-primary/30"
+                    : "text-muted-foreground hover:bg-white/5 hover:text-white border border-transparent"
                   }
                 `}
               >
                 {isActive && (
                   <motion.div
                     layoutId="activeNav"
-                    className="absolute left-0 w-1 h-6 bg-emerald-500 rounded-r-full"
+                    className="absolute left-0 w-1 h-6 bg-primary rounded-r-full shadow-[0_0_10px_rgba(161,0,255,1)]"
                   />
                 )}
-                <item.icon className={`h-5 w-5 ${isActive ? "text-emerald-400" : "text-zinc-500 group-hover:text-white"}`} />
-                <span className="text-sm">{item.name}</span>
+                <item.icon className={`h-5 w-5 ${isActive ? "text-primary drop-shadow-[0_0_5px_rgba(161,0,255,0.8)]" : "text-muted-foreground group-hover:text-white transition-colors"}`} />
+                <span className="text-xs font-black uppercase tracking-widest">{item.name}</span>
               </Link>
             );
           })}
@@ -199,8 +201,8 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       {/* Main Content Area */}
       <main className="flex-1 w-full relative min-h-screen overflow-hidden">
         {/* Animated gradients for premium feel */}
-        <div className="absolute top-[-10%] right-[-5%] w-[40%] h-[40%] bg-blue-600/5 rounded-full blur-[100px] pointer-events-none" />
-        <div className="absolute bottom-[-10%] left-[-5%] w-[40%] h-[40%] bg-emerald-600/5 rounded-full blur-[100px] pointer-events-none" />
+        <div className="absolute top-[-10%] right-[-5%] w-[40%] h-[40%] bg-primary/10 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-[-10%] left-[-5%] w-[40%] h-[40%] bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
 
         <div className="p-4 md:p-10 relative z-10 max-w-7xl mx-auto">
           {children}

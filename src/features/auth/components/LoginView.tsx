@@ -14,16 +14,16 @@ interface LoginViewProps {
 
 export function LoginView({ onSubmit, isLoading }: LoginViewProps) {
     return (
-        <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-blue-900/30 via-background to-background relative overflow-hidden">
+        <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-[#050505] text-white selection:bg-primary/30 relative overflow-hidden">
             {/* Visual Enhancements */}
-            <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] bg-blue-600/10 rounded-full blur-[120px] pointer-events-none" />
-            <div className="absolute bottom-[-20%] right-[-10%] w-[60%] h-[60%] bg-emerald-600/10 rounded-full blur-[120px] pointer-events-none" />
+            <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] bg-primary/10 rounded-full blur-[120px] pointer-events-none" />
+            <div className="absolute bottom-[-20%] right-[-10%] w-[60%] h-[60%] bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
 
-            {/* Animated Floating Particles (CSS only for perf) */}
-            <div className="absolute inset-0 pointer-events-none opacity-20">
-                <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-blue-400 rounded-full animate-pulse" />
-                <div className="absolute top-3/4 left-1/3 w-1 h-1 bg-emerald-400 rounded-full animate-ping" />
-                <div className="absolute top-1/2 right-1/4 w-2 h-2 bg-white rounded-full animate-pulse delay-700" />
+            {/* Animated Floating Particles */}
+            <div className="absolute inset-0 pointer-events-none opacity-30">
+                <div className="absolute top-1/4 left-1/4 w-1.5 h-1.5 bg-primary/80 rounded-full animate-pulse shadow-[0_0_10px_rgba(161,0,255,1)]" />
+                <div className="absolute top-3/4 left-1/3 w-1 h-1 bg-white rounded-full animate-ping shadow-[0_0_5px_rgba(255,255,255,1)]" />
+                <div className="absolute top-1/2 right-1/4 w-2 h-2 bg-primary rounded-full animate-pulse delay-700 shadow-[0_0_15px_rgba(161,0,255,0.8)]" />
             </div>
 
             <motion.div
@@ -33,18 +33,19 @@ export function LoginView({ onSubmit, isLoading }: LoginViewProps) {
                 className="w-full max-w-lg z-10"
             >
                 <div className="flex flex-col items-center mb-10 text-center">
-                    <Link href={FRONTEND_ROUTES.HOME} className="group flex items-center gap-2 mb-4">
-                        <div className="bg-gradient-to-br from-emerald-500 to-blue-600 p-2 rounded-xl shadow-lg ring-1 ring-white/20">
-                            <div className="w-8 h-8 flex items-center justify-center text-white font-black text-xl italic select-none">H</div>
+                    <Link href={FRONTEND_ROUTES.HOME} className="flex flex-col items-center group mb-4">
+                        <div className="relative w-16 h-16 glow-primary rounded-full border border-primary/50 p-1 bg-black group-hover:scale-105 transition-transform duration-300 mb-2">
+                           <img src="/images/hero-h.png" alt="Logo" className="w-full h-full object-contain" />
                         </div>
-                        <span className="text-4xl font-black bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-white/40 tracking-tight">
-                            HyperStrike
-                        </span>
+                        <div className="flex flex-col items-center">
+                            <span className="text-3xl font-black tracking-tighter leading-none italic group-hover:text-primary transition-colors duration-300">HYPER<span className="text-gradient-gold">STRIKEX</span></span>
+                            <span className="text-[10px] tracking-[0.3em] text-muted-foreground font-black uppercase mt-1">Tech • Trivia • Community</span>
+                        </div>
                     </Link>
 
                     <Link
                         href={FRONTEND_ROUTES.HOME}
-                        className="flex items-center text-sm font-semibold text-zinc-500 hover:text-emerald-400 transition-all group"
+                        className="flex items-center text-xs font-black uppercase tracking-widest text-muted-foreground hover:text-primary transition-all group"
                     >
                         <ArrowLeft className="mr-2 h-4 w-4 group-hover:-translate-x-1 transition-transform" />
                         Return to platform

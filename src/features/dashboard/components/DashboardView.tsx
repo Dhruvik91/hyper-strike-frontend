@@ -39,10 +39,10 @@ export function DashboardView({
                     transition={{ duration: 0.5 }}
                 >
                     <div className="flex items-center gap-3 mb-2">
-                        <div className="bg-emerald-500/20 text-emerald-400 p-1.5 rounded-md">
+                        <div className="bg-primary/20 text-primary p-1.5 rounded-md glow-primary">
                             <Zap className="w-4 h-4 fill-current" />
                         </div>
-                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-emerald-500/80">Active Session</span>
+                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary/80">Active Session</span>
                     </div>
                     <h1 className="text-4xl font-black tracking-tight text-white drop-shadow-2xl">
                         Command Center
@@ -62,12 +62,12 @@ export function DashboardView({
                         variant="outline"
                         onClick={onCopyReferral}
                         disabled={!referralLink}
-                        className="flex-1 lg:flex-none border-white/10 bg-white/[0.02] text-zinc-300 hover:text-white hover:bg-white/10 h-12 rounded-xl px-6 font-bold"
+                        className="flex-1 lg:flex-none border-white/10 bg-white/[0.02] text-zinc-300 hover:text-white hover:bg-white/10 h-12 rounded-xl px-6 font-bold uppercase tracking-widest text-xs"
                     >
                         <Copy className="w-4 h-4 mr-2" />
                         Refer Link
                     </Button>
-                    <Button className="flex-1 lg:flex-none bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white font-black h-12 rounded-xl px-8 shadow-[0_0_20px_rgba(16,185,129,0.3)] border-0">
+                    <Button className="flex-1 lg:flex-none bg-gradient-primary text-white font-black h-12 rounded-xl px-8 shadow-[0_0_20px_rgba(161,0,255,0.4)] border border-primary/50 uppercase tracking-widest text-xs glow-primary">
                         <TicketIcon className="w-4 h-4 mr-2" />
                         Launch Tickets
                     </Button>

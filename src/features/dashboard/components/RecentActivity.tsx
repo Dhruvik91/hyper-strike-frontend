@@ -19,13 +19,13 @@ interface RecentActivityProps {
 
 export function RecentActivity({ activities }: RecentActivityProps) {
   return (
-    <Card className="bg-zinc-950/40 border-white/5 backdrop-blur-xl h-full shadow-2xl">
+    <Card className="glass-card border border-white/5 h-full shadow-2xl">
       <CardHeader className="flex flex-row items-center justify-between pb-6">
         <CardTitle className="text-lg font-bold text-white flex items-center gap-2">
           <Clock className="w-5 h-5 text-zinc-400" />
           Recent Activity
         </CardTitle>
-        <Button variant="ghost" size="sm" className="text-xs font-bold text-zinc-500 hover:text-emerald-400 transition-colors uppercase tracking-wider">
+        <Button variant="ghost" size="sm" className="text-xs font-bold text-zinc-500 hover:text-primary transition-colors uppercase tracking-wider">
           View History <ArrowUpRight className="ml-1 w-3 h-3" />
         </Button>
       </CardHeader>
@@ -48,7 +48,7 @@ export function RecentActivity({ activities }: RecentActivityProps) {
                   <p className="text-[10px] uppercase font-bold text-zinc-500 mt-0.5 tracking-wider">{activity.date}</p>
                 </div>
               </div>
-              <div className={`text-sm font-black italic tracking-tighter ${activity.amount.startsWith('+') ? 'text-emerald-400' : 'text-zinc-200'}`}>
+              <div className={`text-sm font-black italic tracking-tighter ${activity.amount.startsWith('+') ? 'text-primary glow-text' : 'text-zinc-200'}`}>
                 {activity.amount}
               </div>
             </motion.div>

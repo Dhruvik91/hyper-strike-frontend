@@ -45,7 +45,7 @@ export function RegisterForm({ onSubmit, isLoading, showOtp, onVerifyOtp, onGoBa
 
 
   return (
-    <Card className="border-white/10 bg-black/40 backdrop-blur-2xl shadow-[0_0_50px_-12px_rgba(59,130,246,0.2)] overflow-hidden">
+    <Card className="glass-card border border-white/5 overflow-hidden">
       <AnimatePresence mode="wait">
         {!showOtp ? (
           <motion.div
@@ -56,10 +56,10 @@ export function RegisterForm({ onSubmit, isLoading, showOtp, onVerifyOtp, onGoBa
             transition={{ duration: 0.3 }}
           >
             <CardHeader className="space-y-1 pb-8 text-center">
-              <CardTitle className="text-3xl font-bold tracking-tight text-white">
+              <CardTitle className="text-3xl md:text-4xl font-black uppercase tracking-tighter text-white">
                 Get Started
               </CardTitle>
-              <CardDescription className="text-zinc-400">
+              <CardDescription className="text-muted-foreground font-medium">
                 Join HyperStrike and start winning today
               </CardDescription>
             </CardHeader>
@@ -74,11 +74,11 @@ export function RegisterForm({ onSubmit, isLoading, showOtp, onVerifyOtp, onGoBa
                         <FormLabel className="text-zinc-300 font-medium ml-1">Email</FormLabel>
                         <FormControl>
                           <div className="relative group">
-                            <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-zinc-500 group-focus-within:text-blue-400 transition-colors" />
+                            <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-zinc-500 group-focus-within:text-primary transition-colors" />
                             <Input
                               placeholder="name@example.com"
                               type="email"
-                              className="bg-zinc-900/50 border-white/10 focus-visible:ring-blue-500/50 h-13 pl-12 transition-all hover:bg-zinc-900/80"
+                              className="bg-white/5 border-white/10 focus-visible:ring-primary/50 h-13 pl-12 transition-all hover:bg-white/10 text-white"
                               disabled={isLoading}
                               {...field}
                             />
@@ -96,11 +96,11 @@ export function RegisterForm({ onSubmit, isLoading, showOtp, onVerifyOtp, onGoBa
                         <FormLabel className="text-zinc-300 font-medium ml-1">WhatsApp Number</FormLabel>
                         <FormControl>
                           <div className="relative group">
-                            <Phone className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-zinc-500 group-focus-within:text-blue-400 transition-colors" />
+                            <Phone className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-zinc-500 group-focus-within:text-primary transition-colors" />
                             <Input
                               placeholder="+123 456 7890"
                               type="tel"
-                              className="bg-zinc-900/50 border-white/10 focus-visible:ring-blue-500/50 h-13 pl-12 transition-all hover:bg-zinc-900/80"
+                              className="bg-white/5 border-white/10 focus-visible:ring-primary/50 h-13 pl-12 transition-all hover:bg-white/10 text-white"
                               disabled={isLoading}
                               {...field}
                             />
@@ -118,11 +118,11 @@ export function RegisterForm({ onSubmit, isLoading, showOtp, onVerifyOtp, onGoBa
                         <FormLabel className="text-zinc-300 font-medium ml-1">Password</FormLabel>
                         <FormControl>
                           <div className="relative group">
-                            <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-zinc-500 group-focus-within:text-blue-400 transition-colors" />
+                            <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-zinc-500 group-focus-within:text-primary transition-colors" />
                             <Input
                               placeholder="Min 8 characters"
                               type="password"
-                              className="bg-zinc-900/50 border-white/10 focus-visible:ring-blue-500/50 h-13 pl-12 transition-all hover:bg-zinc-900/80"
+                              className="bg-white/5 border-white/10 focus-visible:ring-primary/50 h-13 pl-12 transition-all hover:bg-white/10 text-white"
                               disabled={isLoading}
                               {...field}
                             />
@@ -140,11 +140,11 @@ export function RegisterForm({ onSubmit, isLoading, showOtp, onVerifyOtp, onGoBa
                         <FormLabel className="text-zinc-300 font-medium ml-1">Referral Code (Optional)</FormLabel>
                         <FormControl>
                           <div className="relative group">
-                            <UserPlus className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-zinc-500 group-focus-within:text-blue-400 transition-colors" />
+                            <UserPlus className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-zinc-500 group-focus-within:text-primary transition-colors" />
                             <Input
                               placeholder="HSR-XXXXXX"
                               type="text"
-                              className="bg-zinc-900/50 border-white/10 focus-visible:ring-blue-500/50 h-13 pl-12 transition-all hover:bg-zinc-900/80"
+                              className="bg-white/5 border-white/10 focus-visible:ring-primary/50 h-13 pl-12 transition-all hover:bg-white/10 text-white"
                               disabled={isLoading}
                               {...field}
                             />
@@ -158,7 +158,7 @@ export function RegisterForm({ onSubmit, isLoading, showOtp, onVerifyOtp, onGoBa
                   <motion.div whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }} className="pt-4">
                     <Button
                       type="submit"
-                      className="w-full h-14 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-lg shadow-[0_4px_20px_rgba(37,99,235,0.3)] border-0 transition-all"
+                      className="w-full h-14 bg-gradient-primary glow-primary text-white font-black text-sm uppercase tracking-widest border border-primary/50 transition-all shadow-[0_0_20px_rgba(161,0,255,0.4)]"
                       disabled={isLoading}
                     >
                       {isLoading ? (
@@ -188,13 +188,13 @@ export function RegisterForm({ onSubmit, isLoading, showOtp, onVerifyOtp, onGoBa
             className="p-8"
           >
             <div className="text-center space-y-3 mb-8">
-              <div className="mx-auto w-16 h-16 bg-emerald-500/10 rounded-full flex items-center justify-center mb-4 border border-emerald-500/20">
-                <CheckCircle2 className="h-8 w-8 text-emerald-400" />
+              <div className="mx-auto w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4 border border-primary/20 glow-primary">
+                <CheckCircle2 className="h-8 w-8 text-primary" />
               </div>
-              <CardTitle className="text-3xl font-bold tracking-tight text-white text-center">
+              <CardTitle className="text-3xl md:text-4xl font-black uppercase tracking-tighter text-white text-center">
                 Verify WhatsApp
               </CardTitle>
-              <CardDescription className="text-zinc-400 max-w-sm mx-auto">
+              <CardDescription className="text-muted-foreground font-medium max-w-sm mx-auto">
                 We've sent a 6-digit confirmation code to your WhatsApp. Enter it below to secure your account.
               </CardDescription>
             </div>
@@ -203,15 +203,15 @@ export function RegisterForm({ onSubmit, isLoading, showOtp, onVerifyOtp, onGoBa
               <div className="space-y-4">
                 <Input
                   placeholder="EX: 123456"
-                  className="bg-zinc-900/50 border-white/10 focus-visible:ring-emerald-500/50 h-16 text-center text-2xl font-bold tracking-[0.5em] transition-all hover:bg-zinc-900/80"
+                  className="bg-white/5 border-white/10 focus-visible:ring-primary/50 h-16 text-center text-2xl font-black tracking-[0.5em] transition-all hover:bg-white/10 text-white"
                   onChange={(e) => {
                     if (e.target.value.length === 6) {
                       onVerifyOtp(e.target.value);
                     }
                   }}
                 />
-                <p className="text-center text-xs text-zinc-500">
-                  Didn't receive the code? <button className="text-emerald-400 hover:underline font-semibold">Resend OTP</button>
+                <p className="text-center text-xs text-zinc-500 font-medium">
+                  Didn't receive the code? <button className="text-primary hover:underline font-bold uppercase tracking-wider">Resend OTP</button>
                 </p>
               </div>
 
@@ -231,9 +231,9 @@ export function RegisterForm({ onSubmit, isLoading, showOtp, onVerifyOtp, onGoBa
         )}
       </AnimatePresence>
       <CardFooter className="flex flex-col items-center justify-center border-t border-white/5 bg-white/[0.02] py-6">
-        <p className="text-sm text-zinc-400">
+        <p className="text-sm text-zinc-400 font-medium">
           Already have an account?{" "}
-          <Link href={FRONTEND_ROUTES.LOGIN} className="text-blue-400 hover:text-blue-300 font-bold transition-colors">
+          <Link href={FRONTEND_ROUTES.LOGIN} className="text-primary hover:text-primary/80 font-bold uppercase tracking-wider transition-colors ml-1">
             Sign In
           </Link>
         </p>

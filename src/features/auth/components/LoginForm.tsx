@@ -39,12 +39,12 @@ export function LoginForm({ onSubmit, isLoading }: LoginFormProps) {
 
 
   return (
-    <Card className="border-white/10 bg-black/40 backdrop-blur-2xl shadow-[0_0_50px_-12px_rgba(16,185,129,0.2)] overflow-hidden">
+    <Card className="glass-card border border-white/5 overflow-hidden">
       <CardHeader className="space-y-1 pb-8 text-center">
-        <CardTitle className="text-3xl font-bold tracking-tight text-white">
+        <CardTitle className="text-3xl md:text-4xl font-black uppercase tracking-tighter text-white">
           Sign In
         </CardTitle>
-        <CardDescription className="text-zinc-400">
+        <CardDescription className="text-muted-foreground font-medium">
           Enter your details to access your HyperStrike account
         </CardDescription>
       </CardHeader>
@@ -59,11 +59,11 @@ export function LoginForm({ onSubmit, isLoading }: LoginFormProps) {
                   <FormLabel className="text-zinc-300 font-medium ml-1">WhatsApp Number</FormLabel>
                   <FormControl>
                     <div className="relative group">
-                      <Phone className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-zinc-500 group-focus-within:text-emerald-400 transition-colors" />
+                      <Phone className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-zinc-500 group-focus-within:text-primary transition-colors" />
                       <Input
                         placeholder="+123 456 7890"
                         type="tel"
-                        className="bg-zinc-900/50 border-white/10 focus-visible:ring-emerald-500/50 h-14 pl-12 transition-all hover:bg-zinc-900/80 active:scale-[0.99]"
+                        className="bg-white/5 border-white/10 focus-visible:ring-primary/50 h-14 pl-12 transition-all hover:bg-white/10 active:scale-[0.99] text-white"
                         disabled={isLoading}
                         {...field}
                       />
@@ -80,17 +80,17 @@ export function LoginForm({ onSubmit, isLoading }: LoginFormProps) {
                 <FormItem>
                   <div className="flex items-center justify-between ml-1">
                     <FormLabel className="text-zinc-300 font-medium">Password</FormLabel>
-                    <Link href="#" className="text-xs text-emerald-400 hover:text-emerald-300 transition-colors font-semibold">
+                    <Link href="#" className="text-xs text-primary hover:text-primary/80 transition-colors font-semibold uppercase tracking-widest">
                       Forgot password?
                     </Link>
                   </div>
                   <FormControl>
                     <div className="relative group">
-                      <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-zinc-500 group-focus-within:text-emerald-400 transition-colors" />
+                      <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-zinc-500 group-focus-within:text-primary transition-colors" />
                       <Input
                         placeholder="••••••••"
                         type="password"
-                        className="bg-zinc-900/50 border-white/10 focus-visible:ring-emerald-500/50 h-14 pl-12 transition-all hover:bg-zinc-900/80 active:scale-[0.99]"
+                        className="bg-white/5 border-white/10 focus-visible:ring-primary/50 h-14 pl-12 transition-all hover:bg-white/10 active:scale-[0.99] text-white"
                         disabled={isLoading}
                         {...field}
                       />
@@ -106,7 +106,7 @@ export function LoginForm({ onSubmit, isLoading }: LoginFormProps) {
             >
               <Button
                 type="submit"
-                className="w-full h-14 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white font-bold text-lg shadow-[0_4px_20px_rgba(16,185,129,0.3)] border-0 transition-all"
+                className="w-full h-14 bg-gradient-primary glow-primary text-white font-black text-lg uppercase tracking-widest border border-primary/50 transition-all shadow-[0_0_20px_rgba(161,0,255,0.4)]"
                 disabled={isLoading}
               >
                 {isLoading ? (
@@ -128,7 +128,7 @@ export function LoginForm({ onSubmit, isLoading }: LoginFormProps) {
       <CardFooter className="flex flex-col items-center justify-center border-t border-white/5 bg-white/[0.02] py-6">
         <p className="text-sm text-zinc-400">
           New to HyperStrike?{" "}
-          <Link href={FRONTEND_ROUTES.REGISTER} className="text-emerald-400 hover:text-emerald-300 font-bold transition-colors">
+          <Link href={FRONTEND_ROUTES.REGISTER} className="text-primary hover:text-primary/80 font-bold uppercase tracking-wider transition-colors ml-1">
             Create Account
           </Link>
         </p>

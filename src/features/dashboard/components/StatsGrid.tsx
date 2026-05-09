@@ -27,9 +27,9 @@ export function StatsGrid({ stats }: StatsGridProps) {
           transition={{ duration: 0.4, delay: index * 0.1 }}
           whileHover={{ y: -5, transition: { duration: 0.2 } }}
         >
-          <Card className="bg-zinc-950/40 border-white/5 backdrop-blur-xl overflow-hidden relative group h-full">
+          <Card className="glass-card border border-white/5 overflow-hidden relative group h-full">
             {/* Ambient background glow */}
-            <div className={`absolute -right-4 -top-4 w-24 h-24 blur-3xl opacity-10 group-hover:opacity-20 transition-opacity rounded-full px-1 py-1 ${stat.color === 'text-emerald-400' ? 'bg-emerald-500' : stat.color === 'text-blue-400' ? 'bg-blue-500' : stat.color === 'text-purple-400' ? 'bg-purple-500' : 'bg-amber-500'}`} />
+            <div className={`absolute -right-4 -top-4 w-24 h-24 blur-3xl opacity-10 group-hover:opacity-20 transition-opacity rounded-full px-1 py-1 ${stat.color === 'text-primary' ? 'bg-primary' : stat.color === 'text-blue-400' ? 'bg-blue-500' : stat.color === 'text-purple-400' ? 'bg-purple-500' : 'bg-amber-500'}`} />
             
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="text-xs font-bold text-zinc-500 uppercase tracking-widest">
@@ -42,7 +42,7 @@ export function StatsGrid({ stats }: StatsGridProps) {
             <CardContent>
               <div className="text-3xl font-black text-white tracking-tight">{stat.value}</div>
               <p className="text-[10px] font-bold text-zinc-500 mt-2 flex items-center gap-1.5 uppercase">
-                <span className={stat.trend.includes('+') ? 'text-emerald-400' : 'text-zinc-500'}>
+                <span className={stat.trend.includes('+') ? 'text-primary' : 'text-zinc-500'}>
                   {stat.trend}
                 </span>
               </p>

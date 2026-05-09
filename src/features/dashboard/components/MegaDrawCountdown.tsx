@@ -10,9 +10,9 @@ interface MegaDrawCountdownProps {
 
 export function MegaDrawCountdown({ ticketCount }: MegaDrawCountdownProps) {
   return (
-    <Card className="bg-gradient-to-br from-indigo-950/40 via-blue-900/10 to-emerald-950/20 border-white/10 backdrop-blur-xl h-full relative overflow-hidden group shadow-2xl">
+    <Card className="glass-card border border-white/5 h-full relative overflow-hidden group shadow-2xl">
       {/* Decorative pulse background */}
-      <div className="absolute inset-0 bg-gradient-to-t from-emerald-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+      <div className="absolute inset-0 bg-gradient-to-t from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
       
       <CardHeader>
         <CardTitle className="text-2xl font-black text-white flex items-center gap-3">
@@ -29,7 +29,7 @@ export function MegaDrawCountdown({ ticketCount }: MegaDrawCountdownProps) {
             { label: "Days", val: "03" },
             { label: "Hrs", val: "14" },
             { label: "Min", val: "45" },
-            { label: "Sec", val: "22", color: "text-emerald-400" }
+            { label: "Sec", val: "22", color: "text-primary glow-text" }
           ].map((unit, i) => (
             <motion.div 
               key={unit.label}
@@ -38,7 +38,7 @@ export function MegaDrawCountdown({ ticketCount }: MegaDrawCountdownProps) {
               transition={{ delay: i * 0.1 + 0.5 }}
               className="flex flex-col items-center"
             >
-              <div className="w-20 h-20 md:w-24 md:h-24 flex items-center justify-center bg-black/60 rounded-[2rem] border border-white/10 backdrop-blur-2xl shadow-2xl group/unit hover:border-emerald-500/30 transition-all duration-500">
+              <div className="w-20 h-20 md:w-24 md:h-24 flex items-center justify-center bg-black/60 rounded-[2rem] border border-white/10 backdrop-blur-2xl shadow-2xl group/unit hover:border-primary/50 hover:shadow-[0_0_15px_rgba(161,0,255,0.3)] transition-all duration-500">
                 <span className={`text-3xl md:text-5xl font-black tracking-tight ${unit.color || 'text-white'}`}>
                   {unit.val}
                 </span>
@@ -60,7 +60,7 @@ export function MegaDrawCountdown({ ticketCount }: MegaDrawCountdownProps) {
           <div className="text-center sm:text-left">
             <p className="text-white font-bold text-lg mb-1">Boost Your Chances!</p>
             <p className="text-zinc-400 text-sm leading-relaxed">
-              You currently have <span className="text-white font-black underline decoration-emerald-500/50 underline-offset-4">{ticketCount} tickets</span> in the pool.
+              You currently have <span className="text-white font-black underline decoration-primary/50 underline-offset-4">{ticketCount} tickets</span> in the pool.
             </p>
           </div>
         </motion.div>
