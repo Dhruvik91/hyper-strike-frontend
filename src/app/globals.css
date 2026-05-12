@@ -194,4 +194,20 @@
     );
     @apply pointer-events-none;
   }
+
+  .icon-badge {
+    @apply 
+      relative
+      w-16 h-16
+      rounded-full
+      flex items-center justify-center
+      bg-[#1a0a2e]
+      border-2 border-purple-700/60
+      shadow-[0_0_12px_3px_rgba(139,92,246,0.4),inset_0_0_16px_4px_rgba(109,40,217,0.3)]
+      overflow-hidden
+      cursor-pointer
+      transition-all duration-300
+      hover:shadow-[0_0_20px_6px_rgba(139,92,246,0.6),inset_0_0_20px_6px_rgba(109,40,217,0.5)]
+      hover:border-purple-500/80;
+  }
 }
