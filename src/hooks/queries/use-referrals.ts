@@ -29,7 +29,7 @@ export const useValidateReferralMutation = () => {
             );
             return response.data;
         },
-        onError: (error: any) => {
+        onError: (error: Error) => {
             toast.error(error.message || "Invalid referral code");
         },
     });

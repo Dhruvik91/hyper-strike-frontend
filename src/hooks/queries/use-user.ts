@@ -58,7 +58,7 @@ export const useUpdateProfileMutation = () => {
             queryClient.invalidateQueries({ queryKey: ["user-profile"] });
             queryClient.invalidateQueries({ queryKey: ["profile"] });
         },
-        onError: (error: any) => {
+        onError: (error: Error) => {
             toast.error(error.message || "Failed to update profile");
         },
     });

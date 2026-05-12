@@ -36,7 +36,7 @@ export const useMockPaymentSuccessMutation = () => {
         onSuccess: (data) => {
             toast.success(data.message || "Payment simulated successfully");
         },
-        onError: (error: any) => {
+        onError: (error: Error) => {
             toast.error(error.message || "Failed to simulate payment");
         },
     });

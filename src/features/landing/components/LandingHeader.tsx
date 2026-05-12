@@ -19,8 +19,6 @@ const NAV_LINKS = [
   { label: "Home", href: FRONTEND_ROUTES.HOME },
   { label: "Trivia", href: FRONTEND_ROUTES.PUBLIC.TRIVIA },
   { label: "Community", href: FRONTEND_ROUTES.PUBLIC.COMMUNITY },
-  { label: "Rewards", href: FRONTEND_ROUTES.PUBLIC.REWARDS },
-  { label: "VIP Club", href: FRONTEND_ROUTES.PUBLIC.VIP },
 ];
 
 export function LandingHeader() {

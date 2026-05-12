@@ -238,7 +238,7 @@ export const useTriviaTokenMutation = () => {
     onSuccess: (token, action) => {
       toast.success(`Trivia session token ${action}ed successfully.`);
     },
-    onError: (error: any) => {
+    onError: (error: Error) => {
       toast.error(error.message || "Failed to manage trivia session token.");
     },
   });

@@ -3,6 +3,8 @@
 import { motion } from "framer-motion";
 import { Crown, Star, Sparkles, Zap, Gift, Trophy, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { FRONTEND_ROUTES } from "@/constants/constants";
 
 export function LandingVip() {
   return (
@@ -70,10 +72,12 @@ export function LandingVip() {
                ))}
             </div>
 
-            <Button className="w-full lg:w-auto h-16 md:h-18 px-16 bg-gradient-primary glow-primary text-white font-black tracking-[0.2em] text-sm rounded-2xl relative overflow-hidden group uppercase">
-               <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-               JOIN VIP NOW <ArrowRight className="ml-3 w-5 h-5 group-hover:translate-x-2 transition-transform" />
-            </Button>
+            <Link href={FRONTEND_ROUTES.REGISTER} className="w-full lg:w-auto inline-block">
+              <Button className="w-full lg:w-auto h-16 md:h-18 px-16 bg-gradient-primary glow-primary text-white font-black tracking-[0.2em] text-sm rounded-2xl relative overflow-hidden group uppercase">
+                 <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+                 JOIN VIP NOW <ArrowRight className="ml-3 w-5 h-5 group-hover:translate-x-2 transition-transform" />
+              </Button>
+            </Link>
           </div>
 
           {/* Right: Circular CTA Badge */}

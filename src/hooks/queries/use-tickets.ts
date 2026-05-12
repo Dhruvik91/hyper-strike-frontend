@@ -54,7 +54,7 @@ export const usePurchaseTicketMutation = () => {
             queryClient.invalidateQueries({ queryKey: ["my-tickets"] });
             queryClient.invalidateQueries({ queryKey: ["wallet-balance"] });
         },
-        onError: (error: any) => {
+        onError: (error: Error) => {
             toast.error(error.message || "Failed to initiate purchase");
         },
     });
@@ -107,7 +107,7 @@ export const useMockPaymentSuccessMutation = () => {
             queryClient.invalidateQueries({ queryKey: ["my-tickets"] });
             queryClient.invalidateQueries({ queryKey: ["wallet-balance"] });
         },
-        onError: (error: any) => {
+        onError: (error: Error) => {
             toast.error(error.message || "Payment simulation failed");
         },
     });

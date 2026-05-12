@@ -77,7 +77,7 @@ export const useReviewWithdrawalMutation = () => {
             toast.success(`Withdrawal ${variables.action}d successfully`);
             queryClient.invalidateQueries({ queryKey: ["pending-withdrawals"] });
         },
-        onError: (error: any) => {
+        onError: (error: Error) => {
             toast.error(error.message || "Failed to review withdrawal");
         },
     });
@@ -110,7 +110,7 @@ export const useUpdatePlatformConfigMutation = () => {
             queryClient.invalidateQueries({ queryKey: ["platform-config"] });
             queryClient.invalidateQueries({ queryKey: ["ticket-price"] });
         },
-        onError: (error: any) => {
+        onError: (error: Error) => {
             toast.error(error.message || "Failed to update platform configuration");
         },
     });
@@ -143,7 +143,7 @@ export const useFundUserMutation = () => {
             toast.success("User wallet funded successfully");
             queryClient.invalidateQueries({ queryKey: ["super-admin-users"] });
         },
-        onError: (error: any) => {
+        onError: (error: Error) => {
             toast.error(error.message || "Failed to fund user wallet");
         },
     });
@@ -163,7 +163,7 @@ export const useCreateAdminManualMutation = () => {
             toast.success("Admin account created successfully");
             queryClient.invalidateQueries({ queryKey: ["super-admin-admins"] });
         },
-        onError: (error: any) => {
+        onError: (error: Error) => {
             toast.error(error.message || "Failed to create admin account");
         },
     });
@@ -183,7 +183,7 @@ export const useCreateAdminAutoMutation = () => {
             toast.success("Admin account created with auto-generated credentials");
             queryClient.invalidateQueries({ queryKey: ["super-admin-admins"] });
         },
-        onError: (error: any) => {
+        onError: (error: Error) => {
             toast.error(error.message || "Failed to create admin account");
         },
     });
@@ -204,7 +204,7 @@ export const useCreateDrawMutation = () => {
             queryClient.invalidateQueries({ queryKey: ["all-draws"] });
             queryClient.invalidateQueries({ queryKey: ["upcoming-draw"] });
         },
-        onError: (error: any) => {
+        onError: (error: Error) => {
             toast.error(error.message || "Failed to create draw");
         },
     });
@@ -224,7 +224,7 @@ export const useSelectWinnersMutation = () => {
             queryClient.invalidateQueries({ queryKey: ["all-draws"] });
             queryClient.invalidateQueries({ queryKey: ["draw-winners"] });
         },
-        onError: (error: any) => {
+        onError: (error: Error) => {
             toast.error(error.message || "Failed to select winners");
         },
     });
@@ -245,7 +245,7 @@ export const useSetWinnersMutation = () => {
             queryClient.invalidateQueries({ queryKey: ["all-draws"] });
             queryClient.invalidateQueries({ queryKey: ["draw-winners"] });
         },
-        onError: (error: any) => {
+        onError: (error: Error) => {
             toast.error(error.message || "Failed to assign winners");
         },
     });

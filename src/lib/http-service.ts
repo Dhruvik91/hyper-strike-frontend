@@ -52,8 +52,7 @@ class HttpService {
       (config: InternalAxiosRequestConfig) => {
         const token = getAccessToken();
         if (token) {
-          config.headers = config.headers ?? ({} as any);
-          (config.headers as any).Authorization = `Bearer ${token}`;
+          Object.assign(config.headers, { Authorization: `Bearer ${token}` });
         }
         return config;
       },
@@ -76,8 +75,9 @@ class HttpService {
             const messages = Array.isArray(envelope.message)
               ? envelope.message
               : [envelope.message ?? envelope.error ?? 'Request failed'];
-            const error = new Error(messages[0] ?? 'Request failed');
-            (error as any).response = { status: envelope.statusCode, data: envelope };
+            const error = Object.assign(new Error(messages[0] ?? 'Request failed'), {
+              response: { status: envelope.statusCode, data: envelope }
+            });
             throw error;
           }
           return {
@@ -110,7 +110,7 @@ class HttpService {
             setTokenPair(newPair);
 
             originalRequest.headers = originalRequest.headers ?? {};
-            (originalRequest.headers as any).Authorization = `Bearer ${newPair.access_token}`;
+            Object.assign(originalRequest.headers, { Authorization: `Bearer ${newPair.access_token}` });
             return this.axiosInstance.request(originalRequest);
           } catch (_refreshError) {
             clearTokens();

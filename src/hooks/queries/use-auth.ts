@@ -50,7 +50,7 @@ export const useSendOtpMutation = () => {
         onSuccess: () => {
             toast.success("OTP sent to your WhatsApp number");
         },
-        onError: (error: any) => {
+        onError: (error: Error) => {
             toast.error(error.message || "Failed to send OTP");
         },
     });
@@ -70,7 +70,7 @@ export const useVerifyOtpMutation = () => {
                 toast.success("WhatsApp number verified");
             }
         },
-        onError: (error: any) => {
+        onError: (error: Error) => {
             toast.error(error.message || "Invalid or expired OTP");
         },
     });
@@ -91,7 +91,7 @@ export const useRegisterMutation = () => {
             toast.success("Registration successful");
             queryClient.invalidateQueries({ queryKey: ["profile"] });
         },
-        onError: (error: any) => {
+        onError: (error: Error) => {
             toast.error(error.message || "Registration failed");
         },
     });
@@ -112,7 +112,7 @@ export const useLoginMutation = () => {
             toast.success("Login successful");
             queryClient.invalidateQueries({ queryKey: ["profile"] });
         },
-        onError: (error: any) => {
+        onError: (error: Error) => {
             toast.error(error.message || "Login failed");
         },
     });

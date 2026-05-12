@@ -40,7 +40,7 @@ export const useRequestWithdrawalMutation = () => {
             queryClient.invalidateQueries({ queryKey: ["withdrawal-history"] });
             queryClient.invalidateQueries({ queryKey: ["wallet-balance"] });
         },
-        onError: (error: any) => {
+        onError: (error: Error) => {
             toast.error(error.message || "Failed to request withdrawal");
         },
     });

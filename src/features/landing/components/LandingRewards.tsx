@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import { ChevronRight, ArrowRight, Music, Crown } from "lucide-react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { FRONTEND_ROUTES } from "@/constants/constants";
 
 export function LandingRewards() {
   return (
@@ -44,10 +46,12 @@ export function LandingRewards() {
             <p className="text-muted-foreground text-xs md:text-sm text-center mb-10 font-bold leading-relaxed px-6 italic">
               Kickstart your journey with 5 free points!
             </p>
-            <Button variant="ghost" className="w-full text-white font-black tracking-widest text-[11px] uppercase bg-white/5 border border-white/10 rounded-2xl h-16 hover:bg-primary/20 transition-all relative overflow-hidden group">
-              <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-              CLAIM NOW <ArrowRight className="ml-2 w-4 h-4" />
-            </Button>
+            <Link href={FRONTEND_ROUTES.REGISTER} className="w-full block">
+              <Button variant="ghost" className="w-full text-white font-black tracking-widest text-[11px] uppercase bg-white/5 border border-white/10 rounded-2xl h-16 hover:bg-primary/20 transition-all relative overflow-hidden group">
+                <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+                CLAIM NOW <ArrowRight className="ml-2 w-4 h-4" />
+              </Button>
+            </Link>
           </motion.div>
 
           {/* Reward Card 02 (Featured) */}
@@ -72,10 +76,12 @@ export function LandingRewards() {
             <p className="text-muted-foreground text-xs md:text-sm text-center mb-10 font-bold leading-relaxed px-6 italic">
               Play this week and win Apple AirPods Pro 2!
             </p>
-            <Button className="w-full bg-gradient-primary text-white font-black tracking-widest text-[11px] uppercase rounded-2xl h-18 shadow-[0_20px_40px_-10px_rgba(161,0,255,0.6)] relative overflow-hidden group">
-               <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-               PLAY NOW <ArrowRight className="ml-2 w-4 h-4" />
-            </Button>
+            <Link href={FRONTEND_ROUTES.REGISTER} className="w-full block">
+              <Button className="w-full bg-gradient-primary text-white font-black tracking-widest text-[11px] uppercase rounded-2xl h-18 shadow-[0_20px_40px_-10px_rgba(161,0,255,0.6)] relative overflow-hidden group">
+                 <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+                 PLAY NOW <ArrowRight className="ml-2 w-4 h-4" />
+              </Button>
+            </Link>
           </motion.div>
 
           {/* Reward Card 03 */}
@@ -101,10 +107,12 @@ export function LandingRewards() {
             <p className="text-muted-foreground text-xs md:text-sm text-center mb-10 font-bold leading-relaxed px-10 italic">
               Join the VIP Club and win iPhone 15 Pro Max & luxury prizes!
             </p>
-            <Button variant="ghost" className="w-full text-white font-black tracking-widest text-[11px] uppercase bg-white/5 border border-white/10 rounded-2xl h-16 hover:bg-white/10 transition-all relative overflow-hidden group">
-              <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-              JOIN VIP <ArrowRight className="ml-2 w-4 h-4" />
-            </Button>
+            <Link href={FRONTEND_ROUTES.REGISTER} className="w-full block">
+              <Button variant="ghost" className="w-full text-white font-black tracking-widest text-[11px] uppercase bg-white/5 border border-white/10 rounded-2xl h-16 hover:bg-white/10 transition-all relative overflow-hidden group">
+                <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+                JOIN VIP <ArrowRight className="ml-2 w-4 h-4" />
+              </Button>
+            </Link>
           </motion.div>
         </div>
       </div>
