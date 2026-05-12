@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function TriviaPage() {
   return (
-    <main className="w-full min-h-screen relative overflow-hidden pt-24 pb-16 flex flex-col">
+    <main className="w-full flex-1 relative overflow-hidden pt-24 pb-16 flex flex-col">
       {/* Background Cinematic Gradients */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[500px] bg-primary/5 blur-[150px] rounded-full pointer-events-none -z-10" />
 
