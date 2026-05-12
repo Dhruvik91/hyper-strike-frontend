@@ -30,7 +30,7 @@ export function LandingHero() {
   };
 
   return (
-    <section className="relative min-h-[85vh] flex items-center px-4 hero-glow overflow-hidden pb-12">
+    <section className="relative min-h-[70vh] flex items-center px-4 hero-glow overflow-hidden py-12 md:py-20">
       {/* Animated Background Rings */}
       <motion.div
         style={{ rotate }}
@@ -55,18 +55,18 @@ export function LandingHero() {
             </span>
           </motion.div>
 
-          <motion.h1 variants={itemVariants} className="text-[2.6rem] sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.9] text-white drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)]">
+          <motion.h1 variants={itemVariants} className="text-[2.2rem] sm:text-4xl md:text-6xl lg:text-7xl font-black tracking-tighter leading-[0.9] text-white drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)]">
             KNOWLEDGE <br /> IS POWER. <br />
             <span className="text-gradient-primary italic drop-shadow-[0_0_15px_rgba(161,0,255,0.4)]">HYPERSTRIKEX</span> <br /> IS THE FUTURE.
           </motion.h1>
 
-          <motion.p variants={itemVariants} className="text-muted-foreground text-sm md:text-lg max-w-md mx-auto lg:mx-0 leading-relaxed font-bold">
+          <motion.p variants={itemVariants} className="text-muted-foreground text-sm md:text-base max-w-md mx-auto lg:mx-0 leading-relaxed font-bold">
             Compete in trivia. Climb the leaderboard. <br className="hidden sm:block" /> Earn epic rewards in the new tech era.
           </motion.p>
 
           <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-5 mt-4 w-full sm:w-auto">
             <Link href={FRONTEND_ROUTES.REGISTER} className="w-full sm:w-auto">
-              <Button className="w-full bg-gradient-primary glow-primary text-white rounded-2xl h-16 md:h-18 px-12 text-sm md:text-base font-black tracking-widest group uppercase relative overflow-hidden">
+              <Button className="w-full bg-gradient-primary glow-primary text-white rounded-2xl h-14 md:h-16 px-10 text-xs md:text-sm font-black tracking-widest group uppercase relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
                 JOIN NOW <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-2 transition-transform" />
               </Button>
@@ -78,7 +78,7 @@ export function LandingHero() {
           initial={{ scale: 0.7, opacity: 0, y: 50 }}
           animate={{ scale: 1, opacity: 1, y: 0 }}
           transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-          className="relative aspect-square w-full max-w-[340px] md:max-w-[600px] mx-auto lg:ml-auto order-1 lg:order-2"
+          className="relative aspect-square w-full max-w-[280px] md:max-w-[480px] mx-auto lg:ml-auto order-1 lg:order-2"
         >
           <div className="absolute inset-0 bg-primary/20 blur-[80px] md:blur-[120px] rounded-full" />
           {/* Static Visual Wrapper */}

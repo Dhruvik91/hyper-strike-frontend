@@ -12,6 +12,7 @@ import {
 import { Menu } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 import { FRONTEND_ROUTES } from "@/constants/constants";
 
@@ -22,6 +23,8 @@ const NAV_LINKS = [
 ];
 
 export function LandingHeader() {
+  const pathname = usePathname();
+
   return (
     <header className="fixed top-0 left-0 right-0 h-18 md:h-20 px-4 md:px-8 flex items-center justify-between backdrop-blur-3xl bg-black/40 border-b border-white/5 z-40">
       {/* Left: Logo & Mobile Menu */}
@@ -43,15 +46,22 @@ export function LandingHeader() {
             </SheetHeader>
 
             <nav className="flex flex-col gap-4 flex-1">
-              {NAV_LINKS.map((link) => (
+              {NAV_LINKS.map((link) => {
+                const isActive = link.href === "/" ? pathname === "/" : pathname.startsWith(link.href);
+                return (
                 <Link
                   key={link.label}
                   href={link.href}
-                  className="px-4 py-3 rounded-lg text-sm font-bold uppercase tracking-wider text-white hover:bg-white/10 transition-colors border border-transparent hover:border-white/5"
+                  className={`px-4 py-3 rounded-lg text-sm font-bold uppercase tracking-wider transition-colors border ${
+                    isActive
+                      ? "bg-primary/20 text-white border-primary/30 shadow-[0_0_15px_rgba(161,0,255,0.2)]"
+                      : "text-white hover:bg-white/10 border-transparent hover:border-white/5"
+                  }`}
                 >
                   {link.label}
                 </Link>
-              ))}
+                );
+              })}
             </nav>
 
             <div className="mt-auto pt-8 border-t border-white/10 flex flex-col gap-4">
@@ -70,7 +80,7 @@ export function LandingHeader() {
         </Sheet>
         <Link href="/" className="flex items-center gap-3 group">
           <div className="relative w-10 h-10 md:w-12 md:h-12 glow-primary rounded-full border border-primary/50 p-1 bg-black group-hover:scale-105 transition-transform duration-300">
-            <Image src="/images/hero-h.png" alt="Logo" fill className="object-contain" priority />
+            <Image src="/images/home-logo.png" alt="Logo" fill className="object-contain" priority />
           </div>
           <div className="flex flex-col">
             <span className="text-xl md:text-2xl font-black tracking-tighter leading-none italic group-hover:text-primary transition-colors duration-300">HYPER<span className="text-gradient-gold">STRIKEX</span></span>
@@ -81,18 +91,21 @@ export function LandingHeader() {
 
       {/* Center: Desktop Navigation */}
       <nav className="hidden md:flex items-center gap-1 bg-white/5 p-1 rounded-full border border-white/5 backdrop-blur-md shadow-inner">
-        {NAV_LINKS.map((link) => (
+        {NAV_LINKS.map((link) => {
+          const isActive = link.href === "/" ? pathname === "/" : pathname.startsWith(link.href);
+          return (
           <Link
             key={link.label}
             href={link.href}
             className={`px-5 py-2 rounded-full text-[10px] lg:text-[11px] font-black uppercase tracking-widest transition-all duration-300
-              ${link.label === "Home"
+              ${isActive
                 ? "bg-primary/20 text-white shadow-[0_0_20px_rgba(161,0,255,0.3)] border border-primary/30"
                 : "text-muted-foreground hover:text-white hover:bg-white/10 border border-transparent"}`}
           >
             {link.label}
           </Link>
-        ))}
+          );
+        })}
       </nav>
 
       {/* Right: Actions */}

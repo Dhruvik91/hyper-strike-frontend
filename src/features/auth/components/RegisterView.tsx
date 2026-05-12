@@ -43,7 +43,7 @@ export function RegisterView({
                 <div className="flex flex-col items-center mb-8 text-center">
                     <Link href={FRONTEND_ROUTES.HOME} className="flex flex-col items-center group mb-4">
                         <div className="relative w-12 h-12 glow-primary rounded-full border border-primary/50 p-1 bg-black group-hover:scale-105 transition-transform duration-300 mb-2">
-                           <img src="/images/hero-h.png" alt="Logo" className="w-full h-full object-contain" />
+                           <img src="/images/home-logo.png" alt="Logo" className="w-full h-full object-contain" />
                         </div>
                         <div className="flex flex-col items-center">
                             <span className="text-2xl font-black tracking-tighter leading-none italic group-hover:text-primary transition-colors duration-300">HYPER<span className="text-gradient-gold">STRIKEX</span></span>
