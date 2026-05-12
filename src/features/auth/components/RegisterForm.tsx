@@ -55,8 +55,8 @@ export function RegisterForm({ onSubmit, isLoading, showOtp, onVerifyOtp, onGoBa
             exit={{ opacity: 0, x: 20 }}
             transition={{ duration: 0.3 }}
           >
-            <CardHeader className="space-y-1 pb-8 text-center">
-              <CardTitle className="text-3xl md:text-4xl font-black uppercase tracking-tighter text-white">
+            <CardHeader className="space-y-1 pb-6 text-center">
+              <CardTitle className="text-2xl md:text-3xl font-black uppercase tracking-tighter text-white">
                 Get Started
               </CardTitle>
               <CardDescription className="text-muted-foreground font-medium">
@@ -65,7 +65,7 @@ export function RegisterForm({ onSubmit, isLoading, showOtp, onVerifyOtp, onGoBa
             </CardHeader>
             <CardContent>
               <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
                   <FormField
                     control={form.control}
                     name="email"
@@ -78,7 +78,7 @@ export function RegisterForm({ onSubmit, isLoading, showOtp, onVerifyOtp, onGoBa
                             <Input
                               placeholder="name@example.com"
                               type="email"
-                              className="bg-white/5 border-white/10 focus-visible:ring-primary/50 h-13 pl-12 transition-all hover:bg-white/10 text-white"
+                              className="bg-white/5 border-white/10 focus-visible:ring-primary/50 h-12 pl-12 transition-all hover:bg-white/10 text-white"
                               disabled={isLoading}
                               {...field}
                             />
@@ -100,7 +100,7 @@ export function RegisterForm({ onSubmit, isLoading, showOtp, onVerifyOtp, onGoBa
                             <Input
                               placeholder="+123 456 7890"
                               type="tel"
-                              className="bg-white/5 border-white/10 focus-visible:ring-primary/50 h-13 pl-12 transition-all hover:bg-white/10 text-white"
+                              className="bg-white/5 border-white/10 focus-visible:ring-primary/50 h-12 pl-12 transition-all hover:bg-white/10 text-white"
                               disabled={isLoading}
                               {...field}
                             />
@@ -122,7 +122,7 @@ export function RegisterForm({ onSubmit, isLoading, showOtp, onVerifyOtp, onGoBa
                             <Input
                               placeholder="Min 8 characters"
                               type="password"
-                              className="bg-white/5 border-white/10 focus-visible:ring-primary/50 h-13 pl-12 transition-all hover:bg-white/10 text-white"
+                              className="bg-white/5 border-white/10 focus-visible:ring-primary/50 h-12 pl-12 transition-all hover:bg-white/10 text-white"
                               disabled={isLoading}
                               {...field}
                             />
@@ -144,7 +144,7 @@ export function RegisterForm({ onSubmit, isLoading, showOtp, onVerifyOtp, onGoBa
                             <Input
                               placeholder="HSR-XXXXXX"
                               type="text"
-                              className="bg-white/5 border-white/10 focus-visible:ring-primary/50 h-13 pl-12 transition-all hover:bg-white/10 text-white"
+                              className="bg-white/5 border-white/10 focus-visible:ring-primary/50 h-12 pl-12 transition-all hover:bg-white/10 text-white"
                               disabled={isLoading}
                               {...field}
                             />
@@ -158,7 +158,7 @@ export function RegisterForm({ onSubmit, isLoading, showOtp, onVerifyOtp, onGoBa
                   <motion.div whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }} className="pt-4">
                     <Button
                       type="submit"
-                      className="w-full h-14 bg-gradient-primary glow-primary text-white font-black text-sm uppercase tracking-widest border border-primary/50 transition-all shadow-[0_0_20px_rgba(161,0,255,0.4)]"
+                      className="w-full h-12 bg-gradient-primary glow-primary text-white font-black text-sm uppercase tracking-widest border border-primary/50 transition-all shadow-[0_0_20px_rgba(161,0,255,0.4)]"
                       disabled={isLoading}
                     >
                       {isLoading ? (
@@ -168,7 +168,7 @@ export function RegisterForm({ onSubmit, isLoading, showOtp, onVerifyOtp, onGoBa
                         </div>
                       ) : (
                         <div className="flex items-center gap-2">
-                          <span>Continue to WhatsApp OTP</span>
+                          <span>Get Otp</span>
                           <ArrowRight className="h-5 w-5" />
                         </div>
                       )}
@@ -191,7 +191,7 @@ export function RegisterForm({ onSubmit, isLoading, showOtp, onVerifyOtp, onGoBa
               <div className="mx-auto w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4 border border-primary/20 glow-primary">
                 <CheckCircle2 className="h-8 w-8 text-primary" />
               </div>
-              <CardTitle className="text-3xl md:text-4xl font-black uppercase tracking-tighter text-white text-center">
+              <CardTitle className="text-2xl md:text-3xl font-black uppercase tracking-tighter text-white text-center">
                 Verify WhatsApp
               </CardTitle>
               <CardDescription className="text-muted-foreground font-medium max-w-sm mx-auto">
@@ -203,7 +203,7 @@ export function RegisterForm({ onSubmit, isLoading, showOtp, onVerifyOtp, onGoBa
               <div className="space-y-4">
                 <Input
                   placeholder="EX: 123456"
-                  className="bg-white/5 border-white/10 focus-visible:ring-primary/50 h-16 text-center text-2xl font-black tracking-[0.5em] transition-all hover:bg-white/10 text-white"
+                  className="bg-white/5 border-white/10 focus-visible:ring-primary/50 h-14 text-center text-xl font-black tracking-[0.5em] transition-all hover:bg-white/10 text-white"
                   onChange={(e) => {
                     if (e.target.value.length === 6) {
                       onVerifyOtp(e.target.value);

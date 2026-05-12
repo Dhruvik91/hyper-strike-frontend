@@ -40,8 +40,8 @@ export function LoginForm({ onSubmit, isLoading }: LoginFormProps) {
 
   return (
     <Card className="glass-card border border-white/5 overflow-hidden">
-      <CardHeader className="space-y-1 pb-8 text-center">
-        <CardTitle className="text-3xl md:text-4xl font-black uppercase tracking-tighter text-white">
+      <CardHeader className="space-y-1 pb-6 text-center">
+        <CardTitle className="text-2xl md:text-3xl font-black uppercase tracking-tighter text-white">
           Sign In
         </CardTitle>
         <CardDescription className="text-muted-foreground font-medium">
@@ -50,7 +50,7 @@ export function LoginForm({ onSubmit, isLoading }: LoginFormProps) {
       </CardHeader>
       <CardContent className="grid gap-6">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <FormField
               control={form.control}
               name="whatsapp_number"
@@ -63,7 +63,7 @@ export function LoginForm({ onSubmit, isLoading }: LoginFormProps) {
                       <Input
                         placeholder="+123 456 7890"
                         type="tel"
-                        className="bg-white/5 border-white/10 focus-visible:ring-primary/50 h-14 pl-12 transition-all hover:bg-white/10 active:scale-[0.99] text-white"
+                        className="bg-white/5 border-white/10 focus-visible:ring-primary/50 h-12 pl-12 transition-all hover:bg-white/10 active:scale-[0.99] text-white"
                         disabled={isLoading}
                         {...field}
                       />
@@ -90,7 +90,7 @@ export function LoginForm({ onSubmit, isLoading }: LoginFormProps) {
                       <Input
                         placeholder="••••••••"
                         type="password"
-                        className="bg-white/5 border-white/10 focus-visible:ring-primary/50 h-14 pl-12 transition-all hover:bg-white/10 active:scale-[0.99] text-white"
+                        className="bg-white/5 border-white/10 focus-visible:ring-primary/50 h-12 pl-12 transition-all hover:bg-white/10 active:scale-[0.99] text-white"
                         disabled={isLoading}
                         {...field}
                       />
@@ -106,7 +106,7 @@ export function LoginForm({ onSubmit, isLoading }: LoginFormProps) {
             >
               <Button
                 type="submit"
-                className="w-full h-14 bg-gradient-primary glow-primary text-white font-black text-lg uppercase tracking-widest border border-primary/50 transition-all shadow-[0_0_20px_rgba(161,0,255,0.4)]"
+                className="w-full h-12 bg-gradient-primary glow-primary text-white font-black text-lg uppercase tracking-widest border border-primary/50 transition-all shadow-[0_0_20px_rgba(161,0,255,0.4)]"
                 disabled={isLoading}
               >
                 {isLoading ? (

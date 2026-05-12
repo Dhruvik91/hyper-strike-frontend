@@ -30,16 +30,16 @@ export function LoginView({ onSubmit, isLoading }: LoginViewProps) {
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5 }}
-                className="w-full max-w-lg z-10"
+                className="w-full max-w-md z-10 px-4 sm:px-0"
             >
-                <div className="flex flex-col items-center mb-10 text-center">
+                <div className="flex flex-col items-center mb-8 text-center">
                     <Link href={FRONTEND_ROUTES.HOME} className="flex flex-col items-center group mb-4">
-                        <div className="relative w-16 h-16 glow-primary rounded-full border border-primary/50 p-1 bg-black group-hover:scale-105 transition-transform duration-300 mb-2">
+                        <div className="relative w-12 h-12 glow-primary rounded-full border border-primary/50 p-1 bg-black group-hover:scale-105 transition-transform duration-300 mb-2">
                            <img src="/images/hero-h.png" alt="Logo" className="w-full h-full object-contain" />
                         </div>
                         <div className="flex flex-col items-center">
-                            <span className="text-3xl font-black tracking-tighter leading-none italic group-hover:text-primary transition-colors duration-300">HYPER<span className="text-gradient-gold">STRIKEX</span></span>
-                            <span className="text-[10px] tracking-[0.3em] text-muted-foreground font-black uppercase mt-1">Tech • Trivia • Community</span>
+                            <span className="text-2xl font-black tracking-tighter leading-none italic group-hover:text-primary transition-colors duration-300">HYPER<span className="text-gradient-gold">STRIKEX</span></span>
+                            <span className="text-[9px] tracking-[0.3em] text-muted-foreground font-black uppercase mt-1">Tech • Trivia • Community</span>
                         </div>
                     </Link>
 
