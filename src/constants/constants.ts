@@ -62,6 +62,17 @@ export const API_CONFIG = {
   },
 };
 
+export const TRIVIA_API_CONFIG = {
+  baseUrl: "https://opentdb.com",
+  ENDPOINTS: {
+    QUESTIONS: "/api.php",
+    TOKEN: "/api_token.php",
+    CATEGORIES: "/api_category.php",
+    CATEGORY_COUNT: "/api_count.php",
+    GLOBAL_COUNT: "/api_count_global.php",
+  },
+};
+
 export const FRONTEND_ROUTES = {
   HOME: "/",
   LOGIN: "/login",

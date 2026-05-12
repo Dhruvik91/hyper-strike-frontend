@@ -328,3 +328,68 @@ export interface UpdateConfigRequest {
   crypto_currency?: string;
 }
 
+// ── TRIVIA API ───────────────────────────────────────────
+
+export interface TriviaQuestion {
+  category: string;
+  type: string;
+  difficulty: string;
+  question: string;
+  correct_answer: string;
+  incorrect_answers: string[];
+}
+
+export interface TriviaResponse {
+  response_code: number;
+  results: TriviaQuestion[];
+}
+
+export interface TriviaTokenResponse {
+  response_code: number;
+  response_message?: string;
+  token: string;
+}
+
+export interface TriviaCategory {
+  id: number;
+  name: string;
+}
+
+export interface TriviaCategoriesResponse {
+  trivia_categories: TriviaCategory[];
+}
+
+export interface TriviaCategoryCountResponse {
+  category_id: number;
+  category_question_count: {
+    total_question_count: number;
+    total_easy_question_count: number;
+    total_medium_question_count: number;
+    total_hard_question_count: number;
+  };
+}
+
+export interface TriviaGlobalCountResponse {
+  overall: {
+    total_num_of_questions: number;
+    total_num_of_pending_questions: number;
+    total_num_of_verified_questions: number;
+    total_num_of_rejected_questions: number;
+  };
+  categories: Record<string, {
+    total_num_of_questions: number;
+    total_num_of_pending_questions: number;
+    total_num_of_verified_questions: number;
+    total_num_of_rejected_questions: number;
+  }>;
+}
+
+export interface FetchTriviaParams {
+  amount?: number;
+  category?: number;
+  difficulty?: 'easy' | 'medium' | 'hard' | string;
+  type?: 'multiple' | 'boolean' | string;
+  encode?: 'urlLegacy' | 'url3986' | 'base64' | string;
+  token?: string;
+}
+
