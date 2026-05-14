@@ -88,15 +88,6 @@ export function SiteFooter() {
                 <a href="mailto:support@hyperstrikex.co.uk" className="text-white hover:text-primary transition-colors text-sm font-medium mt-1">support@hyperstrikex.co.uk</a>
               </div>
             </div>
-            <div className="flex items-start gap-3">
-              <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
-                <MapPin className="w-4 h-4 text-primary" />
-              </div>
-              <div className="flex flex-col">
-                <span className="text-[10px] text-muted-foreground font-black uppercase tracking-widest">Headquarters</span>
-                <span className="text-white text-sm font-medium mt-1">123 Innovation Drive<br/>Tech City, TC 90210</span>
-              </div>
-            </div>
           </div>
         </div>
       </div>
