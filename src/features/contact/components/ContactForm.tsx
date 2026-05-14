@@ -37,7 +37,7 @@ export function ContactForm() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="w-full max-w-xl mx-auto glass-card rounded-[32px] p-6 md:p-10 relative overflow-hidden"
+      className="w-full max-w-xl mx-auto glass-card rounded-[32px] p-6 md:p-10 relative overflow-hidden h-full flex flex-col justify-between"
     >
       <div className="absolute top-0 right-0 w-32 h-32 bg-primary/20 blur-[60px] rounded-full pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-32 h-32 bg-accent/20 blur-[60px] rounded-full pointer-events-none" />
