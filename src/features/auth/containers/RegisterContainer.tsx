@@ -2,10 +2,12 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { FRONTEND_ROUTES } from "@/constants/constants";
+import { FRONTEND_ROUTES, API_CONFIG } from "@/constants/constants";
 import { useSendOtpMutation, useVerifyOtpMutation, useRegisterMutation } from "@/hooks/queries/use-auth";
 import { RegisterInput } from "@/lib/validations/auth";
 import { RegisterView } from "../components/RegisterView";
+import httpService from "@/lib/http-service";
+import { UserProfile, UserRole } from "@/constants/interface";
 
 export function RegisterContainer() {
     const router = useRouter();
@@ -36,8 +38,21 @@ export function RegisterContainer() {
         }, {
             onSuccess: () => {
                 registerMutation.mutate(registrationData, {
-                    onSuccess: () => {
-                        router.push(FRONTEND_ROUTES.USER.DASHBOARD);
+                    onSuccess: async () => {
+                        try {
+                            const response = await httpService.get<UserProfile>(API_CONFIG.ENDPOINTS.AUTH.ME);
+                            const user = response.data;
+                            
+                            if (user.role_id === UserRole.SUPER_ADMIN) {
+                                router.push(FRONTEND_ROUTES.SUPER_ADMIN.DASHBOARD);
+                            } else if (user.role_id === UserRole.ADMIN) {
+                                router.push(FRONTEND_ROUTES.ADMIN.DASHBOARD);
+                            } else {
+                                router.push(FRONTEND_ROUTES.USER.DASHBOARD);
+                            }
+                        } catch (error) {
+                            router.push(FRONTEND_ROUTES.USER.DASHBOARD);
+                        }
                     }
                 });
             }

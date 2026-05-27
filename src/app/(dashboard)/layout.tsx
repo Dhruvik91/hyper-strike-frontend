@@ -5,7 +5,8 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { FRONTEND_ROUTES } from "@/constants/constants";
-import { useProfileQuery, useLogoutMutation } from "@/hooks/queries/use-auth";
+import { useLogoutMutation } from "@/hooks/queries/use-auth";
+import { useAuth } from "@/providers/AuthProvider";
 import { UserRole } from "@/constants/interface";
 
 import {
@@ -35,25 +36,8 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   const pathname = usePathname();
   const router = useRouter();
 
-  const { data: user, isLoading: isProfileLoading, isError: isProfileError } = useProfileQuery();
+  const { user } = useAuth();
   const logoutMutation = useLogoutMutation();
-
-  useEffect(() => {
-    if (isProfileError) {
-      router.push(FRONTEND_ROUTES.LOGIN);
-    }
-  }, [isProfileError, router]);
-
-  if (isProfileLoading) {
-    return (
-      <div className="min-h-screen bg-[#050505] flex items-center justify-center">
-        <div className="flex flex-col items-center gap-4">
-          <div className="w-12 h-12 border-4 border-primary/30 border-t-primary rounded-full animate-spin glow-primary" />
-          <p className="text-muted-foreground animate-pulse font-medium uppercase tracking-widest text-xs">Loading your striking experience...</p>
-        </div>
-      </div>
-    );
-  }
 
   if (!user) return null;
 
