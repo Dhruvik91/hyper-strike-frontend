@@ -33,7 +33,7 @@ export default function TermsAndConditionsPage() {
             Disclaimer
           </h2>
           <p className="mb-8 leading-relaxed text-base md:text-lg">
-            HyperStrikeX is a UK-based digital platform providing premium skill-based assessment and educational quiz services. The access fee is a subscription for digital content and platform features. HyperStrikeX does not offer &quot;Online Money Gaming,&quot; betting, or gambling services. Participation in promotional challenges is based purely on skill, speed, and knowledge. Access is restricted to users aged 18+ in compliant jurisdictions. All transactions are governed by the laws of the United Kingdom.
+            HyperStrikeX is a UK-based digital platform providing premium skill-based assessment and quiz services. The access fee is a subscription for digital content and platform features. HyperStrikeX does not offer &quot;Online Money Gaming,&quot; betting, or gambling services. Participation in promotional challenges is based purely on skill, speed, and knowledge. Access is restricted to users aged 18+ in compliant jurisdictions. All transactions are governed by the laws of the United Kingdom.
           </p>
 
           <hr className="my-12 border-white/10" />
